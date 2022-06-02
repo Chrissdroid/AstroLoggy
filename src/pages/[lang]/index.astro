@@ -1,0 +1,271 @@
+---
+import Layout from '$/layouts/PageLayout.astro'
+import { createI18n } from '$/scripts/i18n'
+
+import { Markdown } from 'astro/components'
+
+export const getStaticPaths = createI18n('index')
+const { lang } = Astro.params as { [key: string]: string }
+const { translations, langs } = Astro.props
+
+const getTitleFormated = (name: string, alias: string): string => {
+	return translations.index.usage.replace('{name}', name).replace('{alias}', alias)
+}
+
+---
+
+<Layout {translations} {langs} {lang} padding>
+	<section id="index">
+		<h1 class="sr-only">AstroLoggy</h1>
+		<a data-theme="astro" href={`/${lang}/a/`} data-nosnippet>Astro</a>
+		<a data-theme="loggy" href={`/${lang}/l/`} data-nosnippet>Loggy</a>
+		<div class="wrapper">
+			<div class="astro">
+				<h2 set:html={getTitleFormated(translations.index.astro.name, translations.index.astro.alias)}></h2>
+				<Markdown content={translations.index.astro.description} />
+			</div>
+			<div class="loggy">
+				<h2 set:html={getTitleFormated(translations.index.loggy.name, translations.index.loggy.alias)}></h2>
+				<Markdown content={translations.index.loggy.description} />
+			</div>
+		</div>
+	</section>
+
+	<section id="about">
+		<h2>{translations.about.title}</h2>
+		<Markdown content={translations.about.content} />
+		<a href={`/${lang}/about`}>{translations.about.link}</a>
+	</section>
+
+	<section id="blog">
+		<h2>{translations.blog.title}</h2>
+		<Markdown content={translations.blog.content} />
+		<a href={`/${lang}/blog`}>{translations.blog.link}</a>
+	</section>
+
+	<section id="contact">
+		<h2>{translations.contact.title}</h2>
+		<Markdown content={translations.contact.content} />
+		<a href={`/${lang}/contact`}>{translations.contact.link}</a>
+	</section>
+</Layout>
+
+<script>
+	if (!import.meta.SSR) {
+		const callback = (entries) => {
+			entries.forEach(entry =>
+				(entry.isIntersecting) ?
+					entry.target.classList.add('visible')
+					:
+					entry.target.classList.remove('visible')
+			)
+		}
+		const observer = new IntersectionObserver(callback, {
+			root: null,
+			rootMargin: '0px',
+			threshold: 0.5
+		})
+
+		const about = document.getElementById('about')
+		if (about) observer.observe(about)
+
+		const blog = document.getElementById('blog')
+		if (blog) observer.observe(blog)
+
+		const contact = document.getElementById('contact')
+		if (contact) observer.observe(contact)
+	}
+</script>
+
+<style lang="scss">
+
+:global(main) {
+	padding-bottom: 5em;
+	overflow: hidden;
+}
+
+#index {
+	position: relative;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: clamp(1rem, 5vw, 5rem);
+
+	a {
+		font-size: 350%;
+
+		&[data-theme~=astro]:is(:hover, :focus-within)~.wrapper {
+			&::before, .astro {
+				opacity: 1;
+			}
+
+			.astro {
+				transform: translateX(5%);
+			}
+		}
+
+		&[data-theme~=loggy]:is(:hover, :focus-within) ~ .wrapper {
+			&::after, .loggy {
+				opacity: 1;
+			}
+
+			.loggy {
+				transform: translateX(-5%);
+			}
+		}
+	}
+
+	.wrapper {
+		z-index: -1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		max-width: 100vw;
+		background: var(--header-gradient);
+
+		display: flex;
+		flex-direction: column;
+		justify-content: stretch;
+		align-items: stretch;
+
+		.astro, .loggy {
+			flex: 1;
+			opacity: 0;
+		}
+
+		.astro {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-start;
+			transition: opacity 0.5s, transform 0.5s;
+			margin-right: 5.5%;
+
+			:global(strong) {
+				font-weight: 900;
+				color: var(--astro-100);
+			}
+		}
+
+		.loggy {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-end;
+			transition: opacity 0.5s, transform 0.5s;
+			margin-left: 5.5%;
+
+			text-align: right;
+
+			:global(strong) {
+				font-weight: 900;
+				color: var(--loggy-100);
+			}
+		}
+
+		&:before {
+			z-index: -1;
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: var(--header-gradient-astro);
+			opacity: 0;
+			transition: opacity 0.5s;
+		}
+
+		&:after {
+			z-index: -1;
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: var(--header-gradient-loggy);
+			opacity: 0;
+			transition: opacity 0.5s;
+		}
+	}
+}
+
+#about, #blog, #contact {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
+	padding: 4rem clamp(1rem, 10vw, 10rem);
+	font-size: 133%;
+
+	p {
+		transition: transform 0.5s;
+		will-change: transform;
+	}
+
+	&.visible p {
+		transform: translateX(0);
+	}
+
+	a {
+		transition: opacity 0.5s .5s, transform 0.5s .5s;
+		will-change: opacity, transform;
+		opacity: 0;
+	}
+
+	&.visible a {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+#about {
+	border-top: 3px solid var(--active-200);
+
+	p {
+		text-indent: 1rem;
+		transform: translateX(-5%);
+	}
+
+	a {
+		align-self: flex-end;
+		transform: translateX(10%);
+	}
+}
+
+
+#blog {
+	text-align: right;
+	margin: 1rem;
+	background: var(--body-accent);
+	border-radius: 1.5rem;
+
+	p {
+		transform: translateX(5%);
+
+		&::before {
+			content: "";
+			width: 1rem;
+			height: 1rem;
+			float: right;
+		}
+	}
+
+	a {
+		align-self: flex-start;
+		transform: translateX(-10%);
+	}
+}
+
+#contact {
+	align-items: center;
+
+	a {
+		transform: translateY(10%);
+	}
+}
+</style>

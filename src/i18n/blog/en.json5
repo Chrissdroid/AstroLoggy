@@ -1,0 +1,12 @@
+{
+	title: 'Blog',
+	description: 'A blog about web development, programming, and other things.',
+	latestArticles: 'Latest Posts Published',
+	noArticles: 'No posts published yet, come back later!',
+	articles: {
+		by: 'by',
+		readMore: 'Read More',
+		published: 'Published on',
+		updated: 'Updated on',
+	}
+}

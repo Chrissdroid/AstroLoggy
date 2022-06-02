@@ -1,0 +1,23 @@
+---
+title: This website is now available in English !
+description: A new version of the website, with a new design and a better user experience !
+published_at: 18/04/2022
+draft: false
+lang: en
+image:
+  src: /public/assets/astro.png
+  alt: Astro
+author:
+  name: Alexis Balthazard
+  url: /alexis-balthazard
+---
+
+I'm the creator of this website, and i'm proud to announce that this website is now available in English !
+
+## A little backstory
+
+I created this website with my friend [Logan](/logan-sy-forsans) which we use to share our differents passions and projects. It was a great experience and now it's reworked and improved with the help of [Astro](https://astro.build/), a new framework that allows to create static websites easily and quickly!
+
+This site was originally created in French, but now support all kind of languages. All articles are language-specific, so you can find the right one for you.
+
+You can see the list of libraries used for the website's rework on the [libraries](/libraries) page.

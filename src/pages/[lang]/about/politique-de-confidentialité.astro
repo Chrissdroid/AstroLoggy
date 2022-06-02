@@ -1,0 +1,122 @@
+---
+import Layout from '$/layouts/PageLayout.astro'
+import { createI18n } from '$/scripts/i18n'
+import HeaderAnchor from '$/components/HeaderAnchor.astro'
+
+export const getStaticPaths = createI18n('about/index')
+const { translations, langs } = Astro.props
+const { lang } = Astro.params as { [key: string]: string }
+
+---
+
+<Layout {translations} {langs} {lang} padding>
+	<section id="index" data-role="heading">
+		<h1>Politique de confidentialité</h1>
+		<p>Devant le développement des nouveaux outils de communication, il est nécessaire de porter une attention particulière à la protection de la vie privée. C’est pourquoi, nous nous engageons à respecter la confidentialité des renseignements personnels que nous collectons.</p>
+	</section>
+
+	<section id="about">
+		<h2 id="collecte-des-renseignements-personnels">
+			Collecte des renseignements personnels
+			<HeaderAnchor lang={lang} id="collecte-des-renseignements-personnels" />
+		</h2>
+
+		<ul>
+			<li><p>Adresse électronique</p></li>
+			<li><p>Numéro de téléphone</p></li>
+		</ul>
+
+		<p>Les renseignements personnels que nous collectons sont recueillis au travers de formulaires et grâce à l’interactivité établie entre vous et notre site Web. Nous utilisons également, comme indiqué dans la section suivante, des fichiers témoins et/ou journaux pour réunir des informations vous concernant.</p>
+
+
+		<h2 id="formulaires-et-interactivite">
+			Formulaires et interactivité
+			<HeaderAnchor lang={lang} id="formulaires-et-interactivite" />
+		</h2>
+
+		<p>Vos renseignements personnels sont collectés par le biais de formulaire, à savoir :</p>
+
+		<ul>
+			<li><p>Formulaire d'inscription au site Web</p></li>
+			<li><p>Formulaire de contact</p></li>
+		</ul>
+
+		<p>Nous utilisons les renseignements ainsi collectés pour les finalités suivantes :</p>
+
+		<ul>
+			<li><p>Contact</p></li>
+			<li><p>Signaller une activité suspecte sur le compte</p></li>
+			<li><p>Prévenir d'une fraude</p></li>
+		</ul>
+
+
+		<h2 id="droit-d-opposition-et-de-retrait">
+			Droit d’opposition et de retrait
+			<HeaderAnchor lang={lang} id="droit-d-opposition-et-de-retrait" />
+		</h2>
+
+		<p>Nous nous engageons à vous offrir un droit d’opposition et de retrait quant à vos renseignements personnels.</p>
+
+		<p>Le droit d’opposition s’entend comme étant la possiblité offerte aux internautes de refuser que leurs renseignements personnels soient utilisées à certaines fins mentionnées lors de la collecte.</p>
+
+		<p>Le droit de retrait s’entend comme étant la possiblité offerte aux internautes de demander à ce que leurs renseignements personnels ne figurent plus, par exemple, dans une liste de diffusion.</p>
+
+		<p><strong>Pour pouvoir exercer ces droits, vous pouvez :</strong></p>
+
+		<ul>
+			<li><p>Nous contacter via la page de <a href={`/${lang}/contact`}>contact</a>.</p></li>
+			<li><p>Via mail en précisant le quel action voulez vous effectuer</p></li>
+		</ul>
+
+
+		<h2 id="droit-d-accès">
+			Droit d’accès
+			<HeaderAnchor lang={lang} id="droit-d-accès" />
+		</h2>
+
+		<p>Nous nous engageons à reconnaître un droit d’accès et de rectification aux personnes concernées désireuses de consulter, modifier, voire radier les informations les concernant.</p>
+
+		<p><strong>L’exercice de ce droit se fera :</strong></p>
+
+		<ul>
+			<li><p>En nous contactant via la page de <a href={`/${lang}/contact`}>contact</a>.</p></li>
+			<li><p>Via mail en précisant le quel action voulez vous effectuer</p></li>
+		</ul>
+
+		<h2 id="sécurité">
+			Sécurité
+			<HeaderAnchor lang={lang} id="sécurité" />
+		</h2>
+
+		<p>Les renseignements personnels que nous collectons sont conservés dans un environnement sécurisé. Les personnes travaillant pour nous sont tenues de respecter la confidentialité de vos informations.</p>
+
+		<p>Pour assurer la sécurité de vos renseignements personnels, nous avons recours aux mesures suivantes :</p>
+
+		<ul>
+			<li><p>Protocole SSL (Via HTTPS)</p></li>
+			<li><p>Gestion des accès par personnes autorisées</p></li>
+			<li><p>Logiciel de surveillance du réseau</p></li>
+			<li><p>Identifiant / mot de passe</p></li>
+			<li><p>Chiffrement des données sensibles</p></li>
+		</ul>
+
+		<p>Nous nous engageons à maintenir un haut degré de confidentialité en intégrant les dernières innovations technologiques permettant d’assurer la confidentialité de vos transactions. Toutefois, comme aucun mécanisme n’offre une sécurité maximale, une part de risque est toujours présente lorsque l’on utilise Internet pour transmettre des renseignements personnels.</p>
+	</section>
+</Layout>
+
+<style lang="scss">
+
+	:global(main) {
+		padding-bottom: 5em;
+	}
+
+	#about {
+		padding: 6rem clamp(2rem, 20vw, 20rem);
+		border-top: 3px solid var(--active-200);
+
+		ul {
+			padding-left: 2rem;
+		}
+	}
+
+</style>

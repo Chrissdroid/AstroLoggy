@@ -1,0 +1,330 @@
+---
+import { Icon } from 'astro-icon'
+import { readFileSync } from 'fs'
+import json5 from 'json5'
+
+export interface Props {
+	lang: string
+	langs?: string[]
+	url: URL
+	scroll: boolean
+}
+
+const changeLanguage = (url: URL, lang: string) => `/${lang}${url.pathname.slice(3)}`;
+
+const getNewUrl = (breadcrumb: string[], index: number, lang: string) => {
+	return `/${lang}/${ breadcrumb.slice(0, (index + 1) - breadcrumb.length).join('/')}`
+}
+
+const { lang, langs = null, url } = Astro.props
+const translation = json5.parse(readFileSync(`./src/i18n/navigation/${lang}.json5`).toString())
+const languages = json5.parse(readFileSync('./src/i18n/languages.json5').toString())
+
+const breadcrumb = url.pathname.split('/').filter(Boolean).slice(1)
+---
+
+<ol id="att1" role="list">
+	<li><a class="button" href="#content">{translation.goto.content}</a></li>
+</ol>
+
+<header id="actions">
+	<ol role="list" id="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+		<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+			<a itemscope itemtype="https://schema.org/Organization" itemprop="item" itemid={Astro.site.href} href={`/${lang}/`}>
+				<span id="websiteName" itemprop="name">AstroLoggy</span>
+				<meta itemprop="logo" content={(await import('../../public/pwa-512x512.png?url')).default}>
+			</a>
+			<meta itemprop="position" content="1" />
+		</li>
+		{breadcrumb.map((item: string, index: number) => [
+			<span>/</span>,
+			(index !== breadcrumb.length - 1) ? (
+				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<a itemscope itemtype="https://schema.org/WebPage" itemprop="item" itemid={getNewUrl(breadcrumb, index, lang)} href={getNewUrl(breadcrumb, index, lang)}>
+						<span itemprop="name">{decodeURI(item)}</span>
+					</a>
+					<meta itemprop="position" content={breadcrumb.indexOf(item) + 2} />
+				</li>
+			) : (
+				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<span itemprop="name">{decodeURI(item)}</span>
+					<meta itemprop="position" content={breadcrumb.indexOf(item) + 2} />
+				</li>
+			)
+		])}
+    </ol>
+
+	<ul role="list" id="options">
+		<li>
+			<button id="themeButton" type="button" aria-label={translation.actions.change_to_light_theme} data-active="light-theme" data-light={translation.actions.change_to_light_theme} data-dark={translation.actions.change_to_dark_theme} data-default={translation.actions.change_to_default_theme}>
+				<i class="theme dark-theme" aria-hidden="true"><Icon name="radix-icons:moon" /></i>
+				<i class="theme light-theme" aria-hidden="true"><Icon name="radix-icons:sun" /></i>
+				<i class="theme default" aria-hidden="true"><Icon name="radix-icons:globe" /></i>
+			</button>
+		</li>
+		{langs && (
+			<li>
+				<button id="languageButton" type="button">
+					{translation.actions.change_language}
+					<i id="languageButtonIcon" aria-hidden="true"><Icon name="radix-icons:chevron-down" /></i>
+				</button>
+			</li>
+		)}
+	</ul>
+</header>
+
+<section id="navigation">
+	<button id="navigation-toggler" type="button" aria-label={translation.open} data-label-open={translation.open} data-label-close={translation.close}>
+		<i data-mode="scrollDown" aria-hidden="true"></i>
+	</button>
+
+	<nav>
+		<ol role="list">
+			<li>
+				<a href={`/${lang}`} class="button" aria-label={translation.actions.home} data-tippy-content={translation.actions.home}>
+					<span class="sr-only">{translation.actions.home}</span>
+					<i aria-hidden="true"><Icon name="radix-icons:home" /></i>
+				</a>
+			</li>
+			<li>
+				<a href={`/${lang}/about`} class="button" aria-label={translation.actions.about} data-tippy-content={translation.actions.about}>
+					<span class="sr-only">{translation.actions.about}</span>
+					<i aria-hidden="true"><Icon name="radix-icons:info-circled" /></i>
+				</a>
+			</li>
+			<li>
+				<a href={`/${lang}/blog`} class="button" aria-label={translation.actions.blog} data-tippy-content={translation.actions.blog}>
+					<span class="sr-only">{translation.actions.blog}</span>
+					<i aria-hidden="true"><Icon name="radix-icons:chat-bubble" /></i>
+				</a>
+			</li>
+			<li>
+				<a href={`/${lang}/contact`} class="button" aria-label={translation.actions.contact} data-tippy-content={translation.actions.contact}>
+					<i aria-hidden="true"><Icon name="radix-icons:pencil-2" /></i>
+				</a>
+			</li>
+			<!-- <li>
+				<button class="navigation-screen-button" type="button" data-tippy-content={translation.screen.open} data-label-open={translation.screen.open} data-label-close={translation.screen.close}>
+					<i aria-hidden="true">
+						<svg width="24" height="24" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2H1.5C1.22386 2 1 2.22386 1 2.5V7H7V2ZM8 2V7H14V2.5C14 2.22386 13.7761 2 13.5 2H8ZM7 8H1V12.5C1 12.7761 1.22386 13 1.5 13H7V8ZM8 13V8H14V12.5C14 12.7761 13.7761 13 13.5 13H8ZM1.5 1C0.671573 1 0 1.67157 0 2.5V12.5C0 13.3284 0.671573 14 1.5 14H13.5C14.3284 14 15 13.3284 15 12.5V2.5C15 1.67157 14.3284 1 13.5 1H1.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+					</i>
+				</button>
+			</li> -->
+		</ol>
+	</nav>
+
+	<!-- <section class="navigation-screen" tabindex={-1} aria-hidden="true">
+		<ol>
+			<li>
+				<a href="" class="button">
+					<svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M2 19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V5C22 3.34315 20.6569 2 19 2H5C3.34315 2 2 3.34315 2 5V19ZM20 19C20 19.5523 19.5523 20 19 20H5C4.44772 20 4 19.5523 4 19V5C4 4.44772 4.44772 4 5 4H10V12.0111L12.395 12.0112L14.0001 9.86419L15.6051 12.0112H18.0001L18 4H19C19.5523 4 20 4.44772 20 5V19ZM16 4H12V9.33585L14.0001 6.66046L16 9.33571V4Z" fill="currentColor" />
+					</svg>
+					More buttons
+				</a>
+			</li>
+			<li>
+				<a href="" class="button">
+					<svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M2 19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V5C22 3.34315 20.6569 2 19 2H5C3.34315 2 2 3.34315 2 5V19ZM20 19C20 19.5523 19.5523 20 19 20H5C4.44772 20 4 19.5523 4 19V5C4 4.44772 4.44772 4 5 4H10V12.0111L12.395 12.0112L14.0001 9.86419L15.6051 12.0112H18.0001L18 4H19C19.5523 4 20 4.44772 20 5V19ZM16 4H12V9.33585L14.0001 6.66046L16 9.33571V4Z" fill="currentColor" />
+					</svg>
+					More buttons
+				</a>
+			</li>
+			<li>
+				<a href="" class="button">
+					<svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M2 19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V5C22 3.34315 20.6569 2 19 2H5C3.34315 2 2 3.34315 2 5V19ZM20 19C20 19.5523 19.5523 20 19 20H5C4.44772 20 4 19.5523 4 19V5C4 4.44772 4.44772 4 5 4H10V12.0111L12.395 12.0112L14.0001 9.86419L15.6051 12.0112H18.0001L18 4H19C19.5523 4 20 4.44772 20 5V19ZM16 4H12V9.33585L14.0001 6.66046L16 9.33571V4Z" fill="currentColor" />
+					</svg>
+					More buttons
+				</a>
+			</li>
+			<li>
+				<a href="" class="button">
+					<svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M2 19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V5C22 3.34315 20.6569 2 19 2H5C3.34315 2 2 3.34315 2 5V19ZM20 19C20 19.5523 19.5523 20 19 20H5C4.44772 20 4 19.5523 4 19V5C4 4.44772 4.44772 4 5 4H10V12.0111L12.395 12.0112L14.0001 9.86419L15.6051 12.0112H18.0001L18 4H19C19.5523 4 20 4.44772 20 5V19ZM16 4H12V9.33585L14.0001 6.66046L16 9.33571V4Z" fill="currentColor" />
+					</svg>
+					More buttons
+				</a>
+			</li>
+			<li>
+				<a href="" class="button">
+					<svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M2 19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V5C22 3.34315 20.6569 2 19 2H5C3.34315 2 2 3.34315 2 5V19ZM20 19C20 19.5523 19.5523 20 19 20H5C4.44772 20 4 19.5523 4 19V5C4 4.44772 4.44772 4 5 4H10V12.0111L12.395 12.0112L14.0001 9.86419L15.6051 12.0112H18.0001L18 4H19C19.5523 4 20 4.44772 20 5V19ZM16 4H12V9.33585L14.0001 6.66046L16 9.33571V4Z" fill="currentColor" />
+					</svg>
+					More buttons
+				</a>
+			</li>
+			<li>
+				<a href="" class="button">
+					<svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M2 19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V5C22 3.34315 20.6569 2 19 2H5C3.34315 2 2 3.34315 2 5V19ZM20 19C20 19.5523 19.5523 20 19 20H5C4.44772 20 4 19.5523 4 19V5C4 4.44772 4.44772 4 5 4H10V12.0111L12.395 12.0112L14.0001 9.86419L15.6051 12.0112H18.0001L18 4H19C19.5523 4 20 4.44772 20 5V19ZM16 4H12V9.33585L14.0001 6.66046L16 9.33571V4Z" fill="currentColor" />
+					</svg>
+					More buttons
+				</a>
+			</li>
+		</ol>
+	</section> -->
+
+	<section class="navigation-menu" tabindex={-1} aria-hidden="true">
+		<!-- <header>
+			<dl class="profile">
+				<div class="image">
+					<dt>{translation.profile.image}</dt>
+					<dd><img src="https://picsum.photos/48" alt={translation.profile.image} loading="lazy"/></dd>
+				</div>
+
+				<div class="username">
+					<dt>{translation.profile.username}</dt>
+					<dd>Astroalex</dd>
+				</div>
+
+				<div class="level">
+					<dt>{translation.profile.level}</dt>
+					<dd data-label={translation.profile.level_label}>1</dd>
+				</div>
+
+				<div class="points">
+					<dt>{translation.profile.points}</dt>
+					<dd>0</dd>
+				</div>
+			</dl>
+		</header> -->
+		<ol>
+			<!-- <li><a href="">{translation.actions.profile}</a></li> -->
+			<li><a href={`/${lang}/projects`}>{translation.actions.projects}</a></li>
+			<li><a href={`/${lang}/contact`}>{translation.actions.contact}</a></li>
+			<!-- <li>
+				<ol>
+					<li><a class="button" href="">{translation.actions.login}</a></li>
+					<li><a class="button" href="">{translation.actions.register}</a></li>
+				</ol>
+			</li> -->
+		</ol>
+	</section>
+</section>
+
+{langs && (
+	<div id="language-picker">
+		<ol id="language-list" role="list">
+			{langs.map(lg => (
+				<li>
+					<a lang={lg} class={(lg == lang ? 'active' : null) + ' button'} href={changeLanguage(url, lg)}>
+						{languages[lg].name || ''}
+						<i class="flag-icon" aria-hidden="true"><Icon pack="emojione-v1" name={languages[lg].flag} /></i>
+					</a>
+				</li>
+			))}
+		</ol>
+	</div>
+)}
+
+<script>
+	import tippy, { createSingleton } from 'tippy.js';
+	import { navigationMenu, navigationScreen } from '$/scripts/navigation.ts';
+	import DOMPurify from 'dompurify';
+
+	const intersectionObserver = (el, callback) => {
+		if (import.meta.SSR || !el) return false
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				callback(entry.isIntersecting)
+			})
+		}, {
+			root: null,
+			threshold: 0.33
+		})
+		observer.observe(el)
+	}
+
+	if (typeof window !== 'undefined') {
+
+		if (window.trustedTypes && window.trustedTypes.createPolicy) {
+			window.trustedTypes.createPolicy('default', {
+				createHTML: (string) => DOMPurify.sanitize(string, {RETURN_TRUSTED_TYPE: true}),
+			});
+		}
+
+		const tippyInstances = tippy('body>#navigation nav>ol :is(.button, button)');
+
+		createSingleton(tippyInstances, {
+			moveTransition: 'transform .35s cubic-bezier(.65,0,.35,1)',
+			animation: 'shift-toward-subtle',
+			hideOnClick: false
+		});
+
+		if (document.querySelector('#languageButtonIcon')) {
+			tippy('#languageButtonIcon', {
+				content: document.querySelector('#language-picker'),
+				arrow: true,
+				placement: 'bottom',
+				trigger: 'mouseenter focus',
+				interactive: true,
+				triggerTarget: document.querySelector('#languageButton'),
+				appendTo: document.querySelector('#languageButton'),
+				offset: [0, 15],
+			})
+		}
+
+		const themeButton = document.querySelector('#themeButton');
+		tippy(themeButton, {
+			content: themeButton.ariaLabel,
+			arrow: true,
+			placement: 'bottom',
+			trigger: 'mouseenter focus',
+			interactive: false,
+			appendTo: 'parent',
+			offset: [0, 15],
+			hideOnClick: false,
+		})
+
+		const themesList = [
+			'default',
+			'light',
+			'dark',
+		]
+
+		const loadTheme = (currentIndex, nextIndex) => {
+			localStorage.setItem('theme', nextIndex)
+			const nextThemeIndex = (nextIndex + 1) % themesList.length
+			themeButton.dataset.active = themesList[nextThemeIndex] + (nextThemeIndex == 0 ? '' : '-theme')
+			themeButton.ariaLabel = themeButton.dataset[themesList[nextThemeIndex]]
+			themeButton?._tippy?.setContent(themeButton.ariaLabel)
+
+			if (themesList.some(t => document.documentElement.dataset.theme.split(' ').includes(t))) {
+				document.documentElement.dataset.theme = document.documentElement.dataset.theme.replace(themesList[currentIndex], themesList[nextIndex])
+			} else if (document.documentElement.dataset.theme) {
+				document.documentElement.dataset.theme += ' ' + themesList[nextIndex]
+			} else {
+				document.documentElement.dataset.theme = themesList[nextIndex]
+			}
+		}
+
+		const changeTheme = () => {
+			const currentTheme = localStorage.getItem('theme') || themesList.indexOf(themeButton.dataset.active)
+			if (currentTheme == -1 || isNaN(+currentTheme)) {
+				localStorage.setItem('theme', '0')
+				themeButton.dataset.active = 'default'
+			} else {
+				const nextTheme = (+currentTheme + 1) % themesList.length
+				loadTheme(currentTheme, nextTheme)
+			}
+		}
+
+		if (localStorage.getItem('theme')) loadTheme(0, localStorage.getItem('theme') || 0)
+		themeButton.addEventListener('click', changeTheme, {
+			passive: true
+		});
+
+		intersectionObserver(document.querySelector('#index'), (isIntersecting) => isIntersecting ?
+				navigationMenu.changeMode('scrollDown')
+				:
+				navigationMenu.mode == 'default' ?
+					null
+					:
+					navigationMenu.changeMode('default'))
+
+		window.navigationMenu = navigationMenu;
+		window.navigationScreen = navigationScreen;
+	}
+</script>

@@ -1,0 +1,35 @@
+{
+	open: 'Open menu',
+	close: 'Close menu',
+	screen: {
+		open: "Open navigation screen",
+		close: "Close navigation screen"
+	},
+	goto: {
+		content: 'Go to content',
+		search: 'Go to search',
+	},
+	actions: {
+		home: 'Home',
+		about: 'About Us',
+		blog: 'Blog',
+		projects: 'Projects',
+		profile: 'My profile',
+		contact: 'Contact Us',
+		login: 'Log In',
+		logout: 'Log Out',
+		register: "Register",
+		change_language: "Change language",
+		change_theme: "Change color theme",
+		change_to_default_theme: "Change to default color theme",
+		change_to_dark_theme: "Change to dark color theme",
+		change_to_light_theme: "Change to light color theme",
+	},
+	profile: {
+		image: "User's Avatar",
+		username: "Username",
+		level: 'Level',
+		level_label: 'Lvl° ',
+		points: 'Points',
+	}
+}

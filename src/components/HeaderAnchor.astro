@@ -1,0 +1,25 @@
+---
+import { getTranslations } from '$/scripts/i18n'
+
+export interface Props {
+	id: string;
+	label?: string;
+	lang: string;
+}
+
+const { id, label, lang = "en" } = Astro.props as Props
+
+const title = label || getTranslations('components', lang).HeaderAnchor.label
+
+---
+
+<a class="header-anchor" {title} href={'#' + id} data-nosnippet>#</a>
+
+
+<style>
+
+	a {
+		margin-left: .2rem;
+	}
+
+</style>

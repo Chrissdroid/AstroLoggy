@@ -1,0 +1,18 @@
+{
+	title: "Contact Us",
+	description: "there is no `one-way-only` to contact us !",
+	form: {
+		title: "Contact Form",
+		name: "Name",
+		email: "Email",
+		message: "Message",
+		submit: "Send",
+	},
+	other: {
+		title: "Other contacts",
+		tel: "Tel",
+		email: "Email",
+		discord: "Discord",
+		telegram: "Telegram",
+	},
+}

@@ -1,0 +1,167 @@
+@use "sass:map";
+
+$colors: (
+	main-100: (305 59% 91%), // #f6dbf3
+	main-200: (300 60% 84%), // #EEBCEE
+	main-300: (296 39% 68%), // #C98DCD
+	main-400: (291 25% 49%), // #935e9c
+	main-500: (287 35% 26%), // #502B5A
+	main-600: (283 43% 21%), // #401F4D
+	main-700: (279 51% 17%), // #311540
+	main-800: (274 60% 13%), // #230D34
+	main-900: (269 69% 10%), // #19082B
+
+	tint-100: (180 17% 95%), // #F1F5F5
+	tint-200: (180 15% 91%), // #E4EBEB
+	tint-300: (180 06% 75%), // #BBC3C3
+	tint-400: (189 03% 52%), // #818788
+	tint-500: (195 04% 22%), // #36393A
+	tint-600: (198 11% 17%), // #272E31
+	tint-700: (201 21% 13%), // #1B2429
+	tint-800: (206 32% 10%), // #111A21
+	tint-900: (212 46% 07%), // #0A121B
+
+	loggy-100: (170 083% 88%), // #C8FAF2
+	loggy-200: (176 083% 77%), // #93F5EE
+	loggy-300: (180 071% 62%), // #5AE3E3
+	loggy-400: (184 060% 49%), // #31BCC7
+	loggy-500: (189 100% 32%), // #008AA3
+	loggy-600: (194 100% 27%), // #006B8C
+	loggy-700: (198 100% 23%), // #005175
+	loggy-800: (203 100% 18%), // #003A5E
+	loggy-900: (208 100% 15%), // #00294E
+
+	astro-100: (020 80% 90%), // #FAE0D3
+	astro-200: (016 79% 81%), // #F5BCA8
+	astro-300: (010 66% 68%), // #E38A78
+	astro-400: (005 51% 55%), // #C75C52
+	astro-500: (000 65% 39%), // #a32323
+	astro-600: (355 70% 32%), // #8C1923
+	astro-700: (350 75% 26%), // #751122
+	astro-800: (345 79% 21%), // #5E0B20
+	astro-900: (339 86% 16%), // #4E061F
+);
+
+@mixin dark-theme() {
+	--body-bg: var(--tint-500);
+	--body-accent: var(--tint-600);
+
+	--scrollbar-bg: var(--tint-500);
+	--scrollbar-color: var(--active-300);
+
+	--font-color: var(--tint-100);
+	--font-accent: var(--active-100);
+
+	--navigation-color: var(--active-200);
+	--navigation-accent: var(--active-500);
+	--navigation-bg: var(--tint-600);
+
+	--header-gradient: linear-gradient(to bottom right, var(--astro-500), var(--loggy-500));
+	--header-gradient-astro: linear-gradient(to bottom right, var(--astro-300), var(--astro-500), var(--loggy-500));
+	--header-gradient-loggy: linear-gradient(to top left, var(--loggy-300), var(--loggy-500), var(--astro-500));
+
+	--glass-bg: var(--shade-300);
+	--glass-border: var(--shade-500);
+	--glass-color: var(--active-200);
+	--glass-accent: var(--active-300);
+	--glass-shadow: var(--shade-100);
+}
+
+@mixin light-theme() {
+	--body-bg: var(--tint-200);
+	--body-accent: var(--tint-100);
+
+	--scrollbar-bg: var(--tint-300);
+	--scrollbar-color: var(--active-400);
+
+	--font-color: var(--tint-900);
+	--font-accent: var(--active-600);
+
+	--navigation-color: var(--active-600);
+	--navigation-accent: var(--active-100);
+	--navigation-bg: var(--tint-100);
+
+	--header-gradient: linear-gradient(to bottom right, var(--astro-300), var(--astro-100), var(--loggy-100), var(--loggy-300));
+	--header-gradient-astro: linear-gradient(to bottom right, var(--astro-500), var(--astro-300), var(--loggy-300));
+	--header-gradient-loggy: linear-gradient(to top left, var(--loggy-500), var(--loggy-300), var(--astro-300));
+
+	--glass-bg: var(--light-300);
+	--glass-border: var(--light-500);
+	--glass-color: var(--active-200);
+	--glass-accent: var(--active-300);
+	--glass-shadow: var(--light-100);
+}
+
+:root {
+	color-scheme: dark light;
+
+	@each $color, $value in $colors {
+		--#{$color}: #{'hsl('+$value+')'};
+	}
+
+	@for $opacity from 1 to 10 {
+		--shade-#{$opacity+'00'}: hsl(#{map.get($colors, 'tint-100')} / #{calc($opacity / 10)});
+	}
+
+	@for $opacity from 1 to 10 {
+		--light-#{$opacity+'00'}: hsl(#{map.get($colors, 'tint-900')} / #{calc($opacity / 10)});
+	}
+
+	@for $active from 1 to 10 {
+		--active-#{$active+'00'}: var(--main-#{$active+'00'});
+	}
+
+	@include dark-theme;
+}
+
+// @each $color, $value in $colors {
+// 	@property --#{$color} {
+// 		syntax: '<color>';
+// 		initial-value: #{'hsl('+$value+')'};
+// 		inherits: true;
+// 	}
+// }
+
+// @for $opacity from 1 to 9 {
+// 	@property --shade-#{$opacity} {
+// 		syntax: '<color>';
+// 		initial-value: hsl(0 0 100% / #{calc($opacity / 10)});
+// 		inherits: true;
+// 	}
+// }
+
+[data-theme~="astro"] {
+	@for $active from 1 to 10 {
+		--active-#{$active+'00'}: var(--astro-#{$active+'00'}) !important;
+	}
+}
+
+[data-theme~="loggy"] {
+	@for $active from 1 to 10 {
+		--active-#{$active+'00'}: var(--loggy-#{$active+'00'}) !important;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		color-scheme: dark;
+		@include dark-theme;
+	}
+
+	[data-theme~="light"] {
+		color-scheme: light;
+		@include light-theme;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		color-scheme: light;
+		@include light-theme;
+	}
+
+	[data-theme~="dark"] {
+		color-scheme: dark;
+		@include dark-theme;
+	}
+}

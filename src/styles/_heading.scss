@@ -1,0 +1,20 @@
+
+
+[data-role="heading"] {
+	--min: 1rem;
+	--average: 15vw;
+	--max: 17.5rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 6rem clamp(var(--min), var(--average), var(--max));
+
+	background: var(--header-gradient);
+	font-size: 150%;
+
+	h1 {
+		font-weight: 900;
+	}
+}

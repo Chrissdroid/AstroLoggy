@@ -1,0 +1,173 @@
+{
+	headings: {
+		h1: "# People call me **Alexis Balthazard**<br><small> and i'm a web developper</small>",
+		'things-i-do': "I can do things",
+		'things-im-on': "I've some social networks",
+		'things-i-use': "I can use all these things",
+		'things-i-created': "These are project i've been working on",
+		'things-i-like': "Take a look at theses beautiful tools",
+	},
+	'things-i-do': [
+		"Front-end",
+		"A nice Coffee",
+		"Back-end",
+		"Drawings on ms paint",
+		"A well organized git repository",
+		"Prototypes on Figma",
+		"Open-source"
+	],
+	'things-i-use': [
+		"HTML",
+		"CSS",
+		"JavaScript",
+		"TypeScript",
+		"PHP",
+		"Astro",
+		"Vuejs",
+		"React",
+		"Svelte",
+		"MySQL",
+		"Postgres",
+		"REST",
+		"GraphQL",
+		"Figma",
+		"Visual Studio Code",
+		"Putty",
+		"Git",
+		"Continuous Integration",
+	],
+	'things-i-created': [
+		{
+			title: "HexaRolls",
+			slug: "hexarolls",
+			description: "A sharing platform for online **roleplaying**.",
+			links: [
+				{
+					title: "Website",
+					url: "https://hexarolls.com/"
+				},
+				{
+					title: "Github",
+					url: "https://github.com/hexarolls"
+				}
+			],
+			img: {
+				src: "/public/assets/hexarolls.png",
+				alt: "Hexarolls"
+			}
+		},
+		{
+			title: "HexaDices",
+			slug: "hexadices",
+			description: "A desktop application for managing and organize your roleplay sessions.",
+			links: [
+				{
+					title: "Download",
+					url: "https://github.com/HexaRolls/HexaDices/releases/latest"
+				},
+				{
+					title: "Github",
+					url: "https://github.com/HexaRolls/HexaDices"
+				}
+			],
+			img: {
+				src: "/public/assets/hexadices.png",
+				alt: "Hexarolls"
+			}
+		},
+		{
+			title: "Facilpayment",
+			slug: "facilpayment",
+			description: "A brokerage service for online payments.",
+			links: [
+				{
+					title: "Website",
+					url: "https://www.facilpayment.com/"
+				}
+			],
+			img: {
+				src: "/public/assets/facilpayment.png",
+				alt: "Facilpayment"
+			}
+		},
+		{
+			title: "Blank_",
+			slug: "blank",
+			description: "Sets of minimalist templates for creating websites.",
+			links: [],
+			img: {
+				src: "/public/assets/blank_.webp",
+				alt: "Blank"
+			}
+		},
+		{
+			title: "Annexe.me",
+			slug: "annexe-me",
+			description: "An old service for managing and sharing online roleplay games.",
+			links: [],
+			img: {
+				src: "/public/assets/annexe.webp",
+				alt: "Annexe.me"
+			}
+		}
+	],
+	'things-i-like': [
+		{
+			title: "Astro",
+			slug: "astro",
+			description: "Astro is a open-source project for building website with minimal client-side javascript.",
+			links: [
+				{
+					title: "Website",
+					url: "https://astro.build/"
+				},
+				{
+					title: "Documentation",
+					url: "https://docs.astro.build/"
+				}
+			],
+			img: {
+				src: "/public/assets/astro.png",
+				alt: "Astro"
+			}
+		},
+		{
+			title: "Naive UI",
+			slug: "naive-ui",
+			description: "Naive UI is a vue library for building user interfaces.",
+			links: [
+				{
+					title: "GitHub",
+					url: "https://github.com/TuSimple/naive-ui"
+				},
+				{
+					title: "Documentation",
+					url: "https://www.naiveui.com/"
+				}
+			],
+			img: {
+				src: "/public/assets/naive-ui.png",
+				alt: "Naive UI"
+			}
+		},
+		{
+			title: "Files",
+			slug: "files",
+			description: "A intuitive and powerful windows file manager for your files.",
+			links: [
+				{
+					title: "GitHub",
+					url: "https://github.com/files-community/Files"
+				},
+				{
+					title: "Download",
+					url: "https://files.community/download/stable"
+				}
+			],
+			img: {
+				src: "https://github.com/files-community/Files/raw/main/src/Files.Uwp/Assets/FilesHome.png",
+				alt: "Files"
+			}
+		},
+	],
+}

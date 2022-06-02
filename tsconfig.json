@@ -1,0 +1,16 @@
+{
+	"include": ["src/**/*", "@types/**/*", "postcss.config.cjs"],
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"$/*": ["src/*"],
+			"&/*": ["@types/*"],
+			"@/*": ["public/assets/*"],
+		},
+		"moduleResolution": "node",
+		"module": "ES2022",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"types": ["astro/env"]
+	},
+}

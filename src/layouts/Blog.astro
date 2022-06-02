@@ -1,0 +1,125 @@
+---
+import Layout from '$/layouts/PageLayout.astro'
+import { Picture } from 'astro-imagetools/components'
+
+export interface Props {
+	lang: string
+	translations: {
+		[key: string]: string
+	}
+	scroll: boolean,
+	theme?: string
+	Post: any
+	image?: {
+		src: string;
+		alt: string;
+	}
+}
+
+const { translations, lang, scroll = false, theme = "default", Post, image = {src:''} } = Astro.props
+const getDateToEST = (date: string) => {
+	const dateParts = date.split("/")
+
+	return new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]))
+}
+---
+
+<Layout {translations} {lang} {theme} padding>
+
+	<article itemscope itemtype="https://schema.org/BlogPosting">
+		<header>
+			{image.src && (
+				<Picture
+					src={image.src}
+					alt={image?.alt}
+					objectFit="contain"
+					objectPosition="right 50%"
+					position="right"
+				/>
+			)}
+			<div class="temporal">
+				<p>
+					{translations.articles.published}
+					<date itemprop="datePublished" datetime={getDateToEST(Post.frontmatter.published_at)} set:text={getDateToEST(Post.frontmatter.published_at).toLocaleDateString(lang)}></date>
+					{Post.frontmatter.modified_at && Post.frontmatter.published_at !== Post.frontmatter.modified_at ? (
+						<span>
+							&mdash;&nbsp;{translations.articles.updated}
+							<date itemprop="dateModified" datetime={getDateToEST(Post.frontmatter.modified_at)} set:text={getDateToEST(Post.frontmatter.modified_at).toLocaleDateString(lang)}></date>
+						</span>
+					): (
+						<date itemprop="dateModified" datetime={getDateToEST(Post.frontmatter.modified_at || Post.frontmatter.published_at)}></date>
+					)}
+				</p>
+			</div>
+
+			<h1 itemprop="headline">{Post.frontmatter.title}</h1>
+			<p>
+				{translations.articles.by}
+				<a href={Post.frontmatter.author.url} itemprop="author" itemscope itemtype="https://schema.org/Person">
+					{Post.frontmatter.author.name}
+				</a>
+			</p>
+		</header>
+
+		<section class="content">
+			<slot />
+		</section>
+	</article>
+
+</Layout>
+
+<style lang="scss">
+
+article {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5em;
+
+	> header {
+		overflow: hidden;
+		position: relative;
+		flex: 1 0 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 3em 1em 0;
+		border-bottom-right-radius: 1.5em;
+		border-bottom: 2px solid var(--glass-border);
+		border-right: 2px solid var(--glass-border);
+		box-shadow: 0 4px 5px var(--glass-shadow);
+
+		background: linear-gradient(60deg, var(--navigation-accent) 70%, transparent);
+
+		:global(.astro-imagetools-picture) {
+			z-index: -1;
+			position: absolute !important;
+			right: 0;
+			top: 0;
+			height: 100% !important;
+
+			:global(.astro-imagetools-img) {
+				height: 100% !important;
+			}
+		}
+
+		.temporal {
+			color: var(--glass-accent);
+		}
+
+		> p {
+			padding-left: 2em;
+			font-size: clamp(1em, 1.5vw, 1.5em);
+		}
+	}
+
+	> .content {
+		flex: 0 0 clamp(22em, 75vw, 45em);
+		padding: 0 2em;
+		overflow: hidden;
+		padding-bottom: 5em;
+	}
+}
+
+</style>

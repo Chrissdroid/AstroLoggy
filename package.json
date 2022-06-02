@@ -1,0 +1,33 @@
+{
+  "name": "astrologgy",
+  "version": "1.0.0",
+  "description": "personnal website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "author": "Alexis Balthazard <alexis31.balthazard@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@astrojs/sitemap": "^0.1.0",
+    "astro": "1.0.0-beta.38",
+    "json5": "^2.2.1",
+    "sass": "^1.52.1",
+    "tippy.js": "^6.3.7"
+  },
+  "dependencies": {
+    "astro-icon": "^0.7.1",
+    "astro-imagetools": "^0.5.8",
+    "autoprefixer": "^10.4.7",
+    "cssnano": "^5.1.10",
+    "dompurify": "^2.3.8",
+    "postcss": "^8.4.14",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-slug": "^5.0.1",
+    "remark-textr": "^5.0.1"
+  }
+}

@@ -1,0 +1,34 @@
+@use 'utils/variables';
+
+@use '../../node_modules/tippy.js/dist/tippy.css';
+@use '../../node_modules/tippy.js/animations/shift-toward-subtle.css';
+
+@use 'base';
+@use 'navigation';
+@use 'heading';
+@use 'typography';
+
+.tippy-box {
+	color: var(--navigation-color);
+	background-color: var(--navigation-bg);
+	font-weight: 500;
+
+	&[data-placement^=top] > .tippy-arrow:before {
+		border-top-color: var(--navigation-bg);
+	}
+	&[data-placement^=bottom] > .tippy-arrow:before {
+		border-bottom-color: var(--navigation-bg);
+	}
+	&[data-placement^=left] > .tippy-arrow:before {
+		border-left-color: var(--navigation-bg);
+	}
+	&[data-placement^=right] > .tippy-arrow:before {
+		border-right-color: var(--navigation-bg);
+	}
+	> .tippy-backdrop {
+		background-color: var(--navigation-bg);
+	}
+	> .tippy-svg-arrow {
+		fill: var(--navigation-bg);
+	}
+}

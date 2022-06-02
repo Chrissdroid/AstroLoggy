@@ -1,0 +1,28 @@
+{
+	// Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+	// Pointez pour afficher la description des attributs existants.
+	// Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"command": "npm start",
+			"name": "Run dev Server",
+			"request": "launch",
+			"type": "node-terminal"
+		},
+		{
+			"name": "Launch Chrome",
+			"request": "launch",
+			"type": "chrome",
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}"
+		}
+	],
+	"compounds": [
+		{
+			"name": "Launch Project",
+			"configurations": ["Run dev Server", "Launch Chrome"],
+			"stopAll": true
+		}
+	]
+}

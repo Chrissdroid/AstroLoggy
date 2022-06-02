@@ -1,0 +1,20 @@
+{
+	en: {
+		name: 'English',
+		code: 'en',
+		dir: 'ltr',
+		flag: 'flag-for-united-kingdom',
+	},
+	fr: {
+		name: 'Français',
+		code: 'fr',
+		dir: 'ltr',
+		flag: 'flag-for-france',
+	},
+	'de': {
+		name: 'Deutsch',
+		code: 'de',
+		dir: 'ltr',
+		flag: 'flag-for-germany',
+	}
+}

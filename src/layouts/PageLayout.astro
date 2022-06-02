@@ -1,0 +1,43 @@
+---
+import PageHead from '$/components/Head.astro'
+import Navigation from '$/components/Navigation.astro'
+
+export interface Props {
+	lang: string
+	langs: string[]
+	translations: {
+		[key: string]: string
+	}
+	scroll: boolean,
+	theme?: string,
+	padding?: boolean,
+}
+
+const { translations, langs, lang, scroll = false, theme = "default", padding = false } = Astro.props
+const url = new URL(Astro.request.url)
+
+---
+
+<!DOCTYPE html>
+<html lang={lang} dir="ltr" data-theme={theme}>
+<head>
+	<PageHead {...{lang, langs, url, translations}} />
+</head>
+<body>
+	<Navigation {...{lang, langs, url, scroll}} />
+
+	<main data-padding={padding} id="content">
+		<slot />
+	</main>
+
+	<slot name="footer" />
+	<!-- Made with ❤️ by Astro (Alexis Balthazard) using Astro.build -->
+</body>
+</html>
+
+<style>
+	main:not([data-padding]) {
+		padding-top: 2.5em;
+		padding-bottom: 5em;
+	}
+</style>

@@ -1,0 +1,51 @@
+---
+import Blog from '$/layouts/Blog.astro'
+
+import { readFileSync } from 'fs'
+import json5 from 'json5'
+
+interface Frontmatter {
+	title: string;
+	description?: string;
+	image?: {
+		src: string;
+		alt: string;
+	}
+	modified_at?: string;
+	published_at: string;
+	author?: {
+		name: string;
+		url: string;
+	}
+	draft?: boolean;
+	lang: string;
+	theme: string;
+}
+
+export const getStaticPaths = async () => {
+	const posts = await Astro.glob<Frontmatter>(`/src/articles/*.md`)
+	const sortedPosts = posts.filter(post => !post.frontmatter.draft)
+
+	const getId = (path: string) => path.split('/').pop().split('.').shift()
+
+	return sortedPosts.map(post => {
+		return {
+			params: {
+				lang: post.frontmatter.lang,
+				slug: getId(post.file)
+			},
+			props: {
+				translations: json5.parse(readFileSync(`./src/i18n/blog/${post.frontmatter.lang}.json5`).toString()),
+				Post: post
+			}
+		}
+	})
+}
+const { translations, Post = null } = Astro.props
+const { lang } = Astro.params as { [key: string]: string }
+
+---
+
+<Blog {translations} {Post} {lang} image={Post.frontmatter.image} theme={Post.frontmatter.theme}>
+	<Post.Content />
+</Blog>

@@ -1,0 +1,35 @@
+{
+	open: 'Ouvrir le menu',
+	close: 'Fermer le menu',
+	screen: {
+		open: "Ouvrir l'écran de navigation",
+		close: "Fermer l'écran de navigation"
+	},
+	goto: {
+		content: 'Aller au contenu',
+		search: 'Aller à la recherche',
+	},
+	actions: {
+		home: 'Accueil',
+		about: 'À propos',
+		blog: 'Blog',
+		projects: 'Projets',
+		profile: 'Mon Profil',
+		contact: 'Nous Contacter',
+		login: 'Se connecter',
+		logout: 'Se déconnecter',
+		register: "S'inscrire",
+		change_language: 'Changer la langue',
+		change_theme: 'Changer le thème de couleur',
+		change_to_default_theme: "Changer vers le thème par défaut",
+		change_to_dark_theme: "Changer vers le thème sombre",
+		change_to_light_theme: "Changer vers le thème clair",
+	},
+	profile: {
+		image: 'Image de profil',
+		username: "Nom d'utilisateur",
+		level: 'Niveau',
+		level_label: 'Niv° ',
+		points: 'Points',
+	}
+}

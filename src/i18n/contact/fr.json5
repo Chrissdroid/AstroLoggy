@@ -1,0 +1,18 @@
+{
+	title: "Nous contacter",
+	description: "il n'y a pas qu'une seule façon de nous contacter !",
+	form: {
+		title: "Formulaire de contact",
+		name: "Nom",
+		email: "Email",
+		message: "Message",
+		submit: "Envoyer",
+	},
+	other: {
+		title: "Autre contacts",
+		tel: "Téléphone",
+		email: "Email",
+		discord: "Discord",
+		telegram: "Telegram",
+	},
+}

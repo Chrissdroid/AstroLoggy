@@ -1,0 +1,12 @@
+{
+	title: 'Blog',
+	description: "Un blog à propos de la programmation, du développement web et d'autres trucs.",
+	latestArticles: 'Derniers articles publiés',
+	noArticles: 'Aucun article pour le moment, revenez plus tard !',
+	articles: {
+		by: 'par',
+		readMore: 'Lire la suite',
+		published: 'Publié le',
+		updated: 'Modifié le',
+	}
+}

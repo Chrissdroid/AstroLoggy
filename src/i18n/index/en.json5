@@ -1,0 +1,30 @@
+{
+	index: {
+		astro: {
+			name: "Alexis",
+			alias: "<strong>Astro</strong>alex",
+			description: "I'm a web developer passionate about code and new technologies.",
+		},
+		loggy: {
+			name: "Logan",
+			alias: "Brain<strong>Loggy</strong>",
+			description: "I'm a student in computer science and a space enthusiast.",
+		},
+		usage: '{name} aka {alias}'
+	},
+	about: {
+		title: 'About us',
+		content: "AstroLoggy is a collective website of two old friends, passionate about computer science and space. Posting various articles on various technologies, projects of the moment, or on interesting topics to share.",
+		link: "More info",
+	},
+	blog: {
+		title: 'Blog',
+		content: "We post articles on topics that interest us. You can also subscribe to our newsletter to be notified when a new article is published.",
+		link: "See blog posts",
+	},
+	contact: {
+		title: 'Contact',
+		content: "Don't hesitate to contact us for any question or suggestion.",
+		link: "Contact us",
+	},
+}
