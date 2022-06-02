@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "astro-icon": "^0.7.1",
-    "astro-imagetools": "^0.5.8",
+    "astro-imagetools": "^0.6.9",
     "autoprefixer": "^10.4.7",
     "cssnano": "^5.1.10",
     "dompurify": "^2.3.8",

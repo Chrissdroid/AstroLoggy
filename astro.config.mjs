@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config'
-import astroImagePlugin from 'astro-imagetools/plugin'
+import { astroImageTools } from 'astro-imagetools'
 import sitemap from '@astrojs/sitemap'
 
 import { h } from 'hastscript'
@@ -11,7 +11,10 @@ export default defineConfig({
     port: 3000,
     trailingSlash: 'always'
   },
-  integrations: [sitemap()],
+  experimental: {
+    integrations: true
+  },
+  integrations: [sitemap(), astroImageTools],
   markdown: {
     syntaxHighlight: 'shiki',
     shikiConfig: {
@@ -33,11 +36,8 @@ export default defineConfig({
     ]
   },
   vite: {
-    plugins: [
-      astroImagePlugin
-    ],
     ssr: {
       external: ["svgo"],
     },
-  }
+  },
 });
