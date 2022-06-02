@@ -1,0 +1,44 @@
+
+name: 🚀 Deploy Website
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 🛰️ Cache PNPM Modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - name: 🔗 PNPM Setup
+        uses: pnpm/action-setup@v2.1.0
+        with:
+          version: latest
+          run_install: true
+
+      - name: 🔧 Building Website
+        run: pnpm run build --if-present
+
+      - name: 📂 Upload Data
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: dist/
+          protocol: ftps
