@@ -1,10 +1,15 @@
 ---
 import { Page } from '&/page.d.ts'
+import { readFileSync } from 'fs'
+
+import OpenGraph from './head/og.astro'
+import json5 from 'json5'
+
 import '$/styles/global.scss'
 
 export interface Props {
 	translations: {
-		[key: string]: string
+		[key: string]: any
 		page: Page
 	}
 	lang?: string
@@ -15,6 +20,7 @@ export interface Props {
 const changeLanguage = (url: URL, lang: string) => url.origin+`/${lang}${url.pathname.slice(3)}`;
 
 const { translations, lang, langs, url } = Astro.props
+const page = json5.parse(readFileSync(`./src/i18n/defaults/page/${lang}.json5`).toString())
 ---
 
 
@@ -49,5 +55,11 @@ const { translations, lang, langs, url } = Astro.props
 
 <meta property="og:locale" content={lang} />
 
-<title>{translations.title}</title>
-<meta name="description" content={translations.description}>
+<title>{translations?.title || page.title} - AstroLoggy</title>
+
+<meta name="copyright"		content={page.copyright} />
+<meta name="author"			content={page.author} />
+<meta name="keywords"		content={page.keywords} />
+<meta name="description"	content={translations?.description || page.description} />
+
+<OpenGraph page={page} translations={translations} />

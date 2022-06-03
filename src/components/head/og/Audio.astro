@@ -1,0 +1,14 @@
+---
+import type { Page } from '&/page.d.ts'
+
+export interface Props {
+	audio: Page['og']['audio']
+}
+
+const { audio } = Astro.props as Props
+---
+
+<!-- Link display - OpenGraph Audio -->
+<meta property="og:audio"			content={audio.url} />
+<meta property="og:audio:secure_url"content={audio.secure_url} />
+<meta property="og:audio:type"		content={audio.type} />

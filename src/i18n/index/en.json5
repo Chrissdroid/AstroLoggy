@@ -1,4 +1,5 @@
 {
+	title: 'Home',
 	index: {
 		astro: {
 			name: "Alexis",

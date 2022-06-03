@@ -1,0 +1,27 @@
+{
+	'title': 'Blank Page',
+	'description': "AstroLoggy is a collective website of two old friends, passionate about computer science and space.",
+	'author': 'Astroalex, Alexis Balthazard & BrainLoggy, Logan Sy-Forsans',
+	'keywords': 'Webdev, Astronomy, Portfolio, Website, Astro, Loggy',
+	'copyright': '2018-now © AstroLoggy',
+	'themeColor': '#36393a',
+	'twitter': {
+		'card': 'summary_large_image',
+		'site': 'AstroLoggy',
+		'creator': '@Astroalex404',
+	},
+	'og': {
+		'site_name': 'AstroLoggy',
+		'type': 'website',
+		'locale': 'en_US',
+		'determiner': 'auto',
+		// 'image': {
+		// 	'url': Astro.site.href + 'assets/images/desktop/hexarolls.jpg',
+		// 	'secure_url': Astro.site.href + 'assets/images/desktop/hexarolls.jpg',
+		// 	'width': 1200,
+		// 	'height': 630,
+		// 	'type': 'image/jpeg',
+		// 	'alt': 'Page Preview',
+		// }
+	}
+}

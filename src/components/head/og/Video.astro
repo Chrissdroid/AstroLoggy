@@ -1,0 +1,16 @@
+---
+import type { Page } from '&/page.d.ts'
+
+export interface Props {
+	video: Page['og']['video']
+}
+
+const { video } = Astro.props as Props
+---
+
+<!-- Link display - OpenGraph Video -->
+<meta property="og:video"			content={video.url} />
+<meta property="og:video:secure_url"content={video.secure_url} />
+<meta property="og:video:width"		content={String(video.width)} />
+<meta property="og:video:height"	content={String(video.height)} />
+<meta property="og:video:type"		content={video.type} />

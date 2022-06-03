@@ -1,0 +1,20 @@
+---
+import type { Page } from '&/page.d.ts'
+
+export interface Props {
+	image: Page['og']['image']
+}
+
+const { image } = Astro.props as Props
+---
+
+<!-- Link display - Twitter Image -->
+<meta name="twitter:image"			content={image.url}>
+
+<!-- Link display - OpenGraph Image -->
+<meta property="og:image"			content={image.url} />
+<meta property="og:image:secure_url"content={image.secure_url} />
+<meta property="og:image:width"		content={String(image.width)} />
+<meta property="og:image:height"	content={String(image.height)} />
+<meta property="og:image:type"		content={image.type} />
+<meta property="og:image:alt"		content={image.alt} />

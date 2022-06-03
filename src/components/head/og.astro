@@ -1,0 +1,65 @@
+---
+// Type Imports
+import type { Page, OpenGraphProfile, OpenGraphArticle } from '&/page.d.ts'
+import OgArticle from './og/Article.astro'
+import OgAudio from './og/Audio.astro'
+import OgImage from './og/Image.astro'
+import OgProfile from './og/Profile.astro'
+import OgVideo from './og/Video.astro'
+import OgWebsite from './og/Website.astro'
+
+export interface Props {
+	page: Page,
+	translations: {
+		[key: string]: string
+	}
+}
+
+const { page,translations } = Astro.props as Props
+---
+
+<!-- Link display - Twitter -->
+<meta name="twitter:card"		content={page.twitter?.card} />
+<meta name="twitter:site"		content={page.twitter?.site} />
+<meta name="twitter:creator"	content={page.twitter?.creator} />
+<meta name="twitter:title"		content={translations?.title || page.og.title || page.title}>
+<meta name="twitter:description"content={translations?.description || page.og.description || page.description}>
+
+<meta property="twitter:domain"	content={page.og.site_name}>
+<meta property="twitter:url"	content={Astro.site.href}>
+
+<!-- Link display - OpenGraph -->
+<meta property="og:title"		content={translations?.title || page.og.title || page.title} />
+<meta property="og:description"	content={translations?.description || page.og.description || page.description} />
+<meta property="og:url"			content={Astro.site.href} />
+<meta property="og:site_name"	content={page.og.site_name} />
+<meta property="og:locale"		content={page.og.locale} />
+<meta property="og:determiner"	content={page.og.determiner} />
+
+{
+	page.og.image ?
+
+	<OgImage image={page.og.image} />
+
+	: page.og.video ?
+
+	<OgVideo video={page.og.video} />
+
+	: page.og.audio &&
+
+	<OgAudio audio={page.og.audio} />
+}
+
+{
+	page.og.type === 'article' ?
+
+	<OgArticle og={page.og as OpenGraphArticle} />
+
+	: page.og.type === 'profile' ?
+
+	<OgProfile og={page.og as OpenGraphProfile} />
+
+	:
+
+	<OgWebsite type={page.og.type} />
+}

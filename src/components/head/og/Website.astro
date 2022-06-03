@@ -1,0 +1,12 @@
+---
+import type { Page } from '&/page.d.ts'
+
+export interface Props {
+	type: Page['og']['type']
+}
+
+const { type } = Astro.props as Props
+---
+
+<!-- Link display - OpenGraph Website -->
+<meta property="og:type" content={type} />

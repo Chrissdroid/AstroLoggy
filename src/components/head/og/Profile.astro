@@ -1,0 +1,13 @@
+---
+import type { OpenGraphProfile } from '&/page.d.ts'
+
+export interface Props {
+	og: OpenGraphProfile;
+}
+
+const { og } = Astro.props as Props
+---
+
+<!-- Link display - OpenGraph Profile -->
+<meta property="og:type" content="profile" />
+<meta property="og:profile:username" content={og.username} />

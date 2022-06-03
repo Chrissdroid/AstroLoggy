@@ -1,4 +1,6 @@
 {
+	title: 'Alexis Balthazard',
+	description: "People call me Alexis Balthazard and i'm a web developper",
 	headings: {
 		h1: "# People call me **Alexis Balthazard**<br><small> and i'm a web developper</small>",
 		'things-i-do': "I can do things",
