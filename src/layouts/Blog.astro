@@ -24,7 +24,7 @@ const getDateToEST = (date: string) => {
 }
 ---
 
-<Layout {translations} {lang} {theme} padding>
+<Layout translations={{...translations, title: Post.frontmatter.title}} {lang} {theme} padding>
 
 	<article itemscope itemtype="https://schema.org/BlogPosting">
 		<header>
