@@ -19,7 +19,7 @@ export interface Props {
 
 const changeLanguage = (url: URL, lang: string) => url.origin+`/${lang}${url.pathname.slice(3)}`;
 
-const { translations, lang, langs, url } = Astro.props
+const { translations, lang = 'en', langs, url } = Astro.props
 const page = json5.parse(readFileSync(`./src/i18n/defaults/page/${lang}.json5`).toString())
 ---
 
