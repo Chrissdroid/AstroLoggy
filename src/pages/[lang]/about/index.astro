@@ -9,5 +9,7 @@ const { lang } = Astro.params as { [key: string]: string }
 ---
 
 <Layout {translations} {langs} {lang}>
-	Wow, such empty! <a href={`/${lang}/about/privacy-policy`}>Privacy Policy</a> <a href={`/${lang}/about/politique-de-confidentialité`}>Politique de confidentialité</a>
+	<p>This page is still under development, please wait</p>
+	<p><a href={`/${lang}/about/privacy-policy`}>Privacy Policy</a></p>
+	<p><a href={`/${lang}/about/politique-de-confidentialité`}>Politique de confidentialité</a></p>
 </Layout>
