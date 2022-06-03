@@ -1,5 +1,13 @@
 {
-	"include": ["src/**/*", "@types/**/*", "postcss.config.cjs"],
+	"include": [
+		"src/**/*",
+		"@types/**/*",
+		"postcss.config.cjs",
+		"**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	],
 	"compilerOptions": {
 		"baseUrl": "./",
 		"paths": {
@@ -12,5 +20,5 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"types": ["astro/env"]
-	},
+	}
 }
