@@ -43,6 +43,8 @@ $colors: (
 );
 
 @mixin dark-theme() {
+	accent-color: var(--active-300);
+
 	--body-bg: var(--tint-500);
 	--body-accent: var(--tint-600);
 
@@ -68,6 +70,8 @@ $colors: (
 }
 
 @mixin light-theme() {
+	accent-color: var(--active-400);
+
 	--body-bg: var(--tint-200);
 	--body-accent: var(--tint-100);
 

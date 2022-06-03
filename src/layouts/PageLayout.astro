@@ -21,7 +21,7 @@ const url = new URL(Astro.request.url)
 <!DOCTYPE html>
 <html lang={lang} dir="ltr" data-theme={theme}>
 <head>
-	<PageHead {...{lang, langs, url, translations}} />
+	<PageHead {...{lang, langs, url, translations, theme}} />
 </head>
 <body>
 	<Navigation {...{lang, langs, url, scroll}} />

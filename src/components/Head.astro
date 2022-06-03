@@ -14,12 +14,13 @@ export interface Props {
 	}
 	lang?: string
 	langs: string[]
-	url: URL
+	url: URL,
+	theme?: 'default' | 'astro' | 'loggy'
 }
 
 const changeLanguage = (url: URL, lang: string) => url.origin+`/${lang}${url.pathname.slice(3)}`;
 
-const { translations, lang = 'en', langs, url } = Astro.props
+const { translations, lang = 'en', langs, url, theme = 'default' } = Astro.props
 const page = json5.parse(readFileSync(`./src/i18n/defaults/page/${lang}.json5`).toString())
 ---
 
@@ -43,7 +44,7 @@ const page = json5.parse(readFileSync(`./src/i18n/defaults/page/${lang}.json5`).
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#502b5a">
 
 <meta name="msapplication-TileColor" content="#36393a">
-<meta name="theme-color" content="#36393a">
+<meta name="theme-color" content={theme === 'default' ? "#4f2b5a" : theme === 'astro' ? "#a42323" : theme === 'loggy' ? "#008ba3" : "#4f2b5a"}>
 
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="color-scheme" content="dark light">
