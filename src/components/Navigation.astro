@@ -30,9 +30,9 @@ const breadcrumb = url.pathname.split('/').filter(Boolean).slice(1)
 <header id="actions">
 	<ol role="list" id="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
 		<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-			<a itemscope itemtype="https://schema.org/Organization" itemprop="item" itemid={Astro.site.href} href={`/${lang}/`}>
-				<span id="websiteName" itemprop="name">AstroLoggy</span>
-				<meta itemprop="logo" content={(await import('../../public/pwa-512x512.png?url')).default}>
+			<a id="websiteName" itemscope itemtype="https://schema.org/Organization" itemprop="item" itemid={Astro.site.href} href={`/${lang}/`}>
+				<img itemprop="logo" src="/assets/header-icon.svg" width="32" height="32" alt={translation.favicon}>
+				<meta content="AstroLoggy" itemprop="name">
 			</a>
 			<meta itemprop="position" content="1" />
 		</li>

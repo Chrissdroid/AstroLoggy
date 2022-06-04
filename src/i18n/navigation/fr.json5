@@ -1,6 +1,7 @@
 {
 	open: 'Ouvrir le menu',
 	close: 'Fermer le menu',
+	favicon: "Logo d'AstroLoggy",
 	screen: {
 		open: "Ouvrir l'écran de navigation",
 		close: "Fermer l'écran de navigation"

@@ -65,6 +65,25 @@
 		border-right: 2px solid var(--glass-border);
 		box-shadow: 0 4px 30px var(--glass-shadow);
 		background-color: var(--navigation-bg);
+
+		li {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#websiteName {
+			transition: filter .15s ease-out;
+
+			&::after, &::before {
+				content: none;
+			}
+
+			&:hover {
+				filter: drop-shadow(0 0 .15rem var(--glass-border));
+			}
+		}
 	}
 	#language-list {
 		pointer-events: initial;
