@@ -2,6 +2,7 @@
 	open: 'Open menu',
 	close: 'Close menu',
 	favicon: "AstroLoggy's Icon",
+	onThisPage: 'On this page',
 	screen: {
 		open: "Open navigation screen",
 		close: "Close navigation screen"

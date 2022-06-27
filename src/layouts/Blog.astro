@@ -1,5 +1,6 @@
 ---
 import Layout from '$/layouts/PageLayout.astro'
+import Sidebar from '$/components/navigation/Sidebar.astro';
 import { Picture } from 'astro-imagetools/components'
 
 export interface Props {
@@ -22,6 +23,8 @@ const getDateToEST = (date: string) => {
 
 	return new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]))
 }
+
+const Headers = await Post.getHeaders();
 ---
 
 <Layout translations={{...translations, title: Post.frontmatter.title}} {lang} {theme} padding>
@@ -61,6 +64,10 @@ const getDateToEST = (date: string) => {
 			</p>
 		</header>
 
+		<aside>
+			<Sidebar lang={lang} headers={Headers} />
+		</aside>
+
 		<section class="content">
 			<slot />
 		</section>
@@ -72,9 +79,10 @@ const getDateToEST = (date: string) => {
 
 article {
 	display: flex;
+	flex-direction: row-reverse;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
+	align-items: stretch;
 	gap: 1.5em;
 
 	> header {
@@ -119,6 +127,13 @@ article {
 		padding: 0 2em;
 		overflow: hidden;
 		padding-bottom: 5em;
+	}
+
+	> aside {
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-start;
+		flex: 0 0 clamp(10em, 17.5vw, 12em);
 	}
 }
 

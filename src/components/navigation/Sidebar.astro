@@ -1,0 +1,53 @@
+---
+import { readFileSync } from 'fs'
+import json5 from 'json5'
+
+export interface Props {
+	headers: {
+		depth: number;
+		slug: string;
+		text: string;
+	}[];
+	lang: string;
+}
+
+const { headers, lang } = Astro.props as Props;
+const translation = json5.parse(readFileSync(`./src/i18n/navigation/${lang}.json5`).toString())
+
+---
+
+<nav>
+	<p class="h2">{translation.onThisPage}</p>
+	<ol>
+		{headers.map(({ depth, slug, text }) => (
+			<li>
+				<a class="button" href={`#${slug}`} style={`--glass-border:var(--active-100)`}>{text.split('#')[0]}</a>
+			</li>
+		))}
+	</ol>
+</nav>
+
+<style>
+
+nav {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1rem;
+	position: sticky;
+	width: 100%;
+	top: 3rem;
+}
+
+ol {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	align-items: stretch;
+	gap: 0.5rem;
+}
+
+a {
+	width: 100%;
+}
+
+</style>
