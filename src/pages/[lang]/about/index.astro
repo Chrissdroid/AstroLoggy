@@ -1,15 +1,56 @@
 ---
+import Markdown from '@astrojs/markdown-component'
 import Layout from '$/layouts/PageLayout.astro'
 import { createI18n } from '$/scripts/i18n'
+import { Icon } from 'astro-icon'
 
 export const getStaticPaths = createI18n('about/index')
 const { translations, langs } = Astro.props
 const { lang } = Astro.params as { [key: string]: string }
-
 ---
 
-<Layout {translations} {langs} {lang}>
-	<p>This page is still under development, please wait</p>
-	<p><a href={`/${lang}/about/privacy-policy`}>Privacy Policy</a></p>
-	<p><a href={`/${lang}/about/politique-de-confidentialité`}>Politique de confidentialité</a></p>
+<Layout {translations} {langs} {lang} padding>
+	<section id='index' data-role='heading'>
+		<h1>{translations.title}</h1>
+		<Markdown content={translations.description} />
+	</section>
+
+	<ul>
+		{
+			lang == 'en' ? (
+				<li>
+					<a href={`/${lang}/about/privacy-policy`}>
+						<Icon name='mdi:security-lock' />
+						Privacy Policy
+					</a>
+				</li>
+			) : (
+				<li>
+					<a href={`/${lang}/about/politique-de-confidentialité`}>
+						<Icon name='mdi:security-lock' />
+						Politique de confidentialité
+					</a>
+				</li>
+			)
+		}
+	</ul>
 </Layout>
+
+<style>
+	ul {
+		border-top: 3px solid var(--active-200);
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+		padding-block: 2rem;
+	}
+
+	li {
+		list-style-type: none;
+	}
+
+	a {
+		padding: 1rem 2rem !important;
+	}
+</style>
