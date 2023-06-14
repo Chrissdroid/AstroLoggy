@@ -2,7 +2,7 @@
 import Layout from '$/layouts/PageLayout.astro'
 import { createI18n } from '$/scripts/i18n'
 
-import { Markdown } from 'astro/components'
+import Markdown from '@astrojs/markdown-component';
 
 export const getStaticPaths = createI18n('index')
 const { lang } = Astro.params as { [key: string]: string }
@@ -51,7 +51,7 @@ const getTitleFormated = (name: string, alias: string): string => {
 </Layout>
 
 <script>
-	if (!import.meta.SSR) {
+	if (!import.meta.env.SSR) {
 		const callback = (entries) => {
 			entries.forEach(entry =>
 				(entry.isIntersecting) ?

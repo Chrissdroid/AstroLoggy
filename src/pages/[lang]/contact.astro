@@ -3,7 +3,7 @@ import Layout from '$/layouts/PageLayout.astro'
 import HeaderAnchor from '$/components/HeaderAnchor.astro'
 
 import { createI18n } from '$/scripts/i18n'
-import { Markdown } from 'astro/components'
+import Markdown from '@astrojs/markdown-component';
 
 export const getStaticPaths = createI18n('contact')
 const { translations, langs } = Astro.props

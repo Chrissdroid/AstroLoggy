@@ -26,12 +26,12 @@ const { page,translations } = Astro.props as Props
 <meta name="twitter:description"content={translations?.description || page.og.description || page.description}>
 
 <meta property="twitter:domain"	content={page.og.site_name}>
-<meta property="twitter:url"	content={Astro.site.href}>
+<meta property="twitter:url"	content={Astro.site?.href}>
 
 <!-- Link display - OpenGraph -->
 <meta property="og:title"		content={translations?.title || page.og.title || page.title} />
 <meta property="og:description"	content={translations?.description || page.og.description || page.description} />
-<meta property="og:url"			content={Astro.site.href} />
+<meta property="og:url"			content={Astro.site?.href} />
 <meta property="og:site_name"	content={page.og.site_name} />
 <meta property="og:locale"		content={page.og.locale} />
 <meta property="og:determiner"	content={page.og.determiner} />

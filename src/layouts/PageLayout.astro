@@ -1,43 +1,49 @@
 ---
+import type { Page } from '&/page.d'
 import PageHead from '$/components/Head.astro'
 import Navigation from '$/components/Navigation.astro'
 
 export interface Props {
 	lang: string
-	langs: string[]
+	langs?: string[]
 	translations: {
-		[key: string]: string
+		[key: string]: any
+		page: Page
 	}
-	scroll: boolean,
-	theme?: string,
-	padding?: boolean,
+	theme?: 'default' | 'astro' | 'loggy'
+	padding?: boolean
+	share?: {
+		url: string
+		text: string
+		title: string
+	}
 }
 
-const { translations, langs, lang, scroll = false, theme = "default", padding = false } = Astro.props
+const { translations, langs, lang, theme = 'default', padding = false, share } = Astro.props
 const url = new URL(Astro.request.url)
-
 ---
 
 <!DOCTYPE html>
-<html lang={lang} dir="ltr" data-theme={theme}>
-<head>
-	<PageHead {...{lang, langs, url, translations, theme}} />
-</head>
-<body>
-	<Navigation {...{lang, langs, url, scroll}} />
+<html {lang} dir='ltr' data-theme={theme}>
+	<head>
+		<PageHead {lang} {langs} {url} {translations} {theme} />
+	</head>
+	<body>
+		<Navigation {...{ lang, langs, url, share }} />
 
-	<main data-padding={padding} id="content">
-		<slot />
-	</main>
+		<main data-padding={padding} id='content'>
+			<slot />
+		</main>
 
-	<slot name="footer" />
-	<!-- Made with ❤️ by Astro (Alexis Balthazard) using Astro.build -->
-</body>
+		<slot name='footer' />
+
+		<!-- Made with ❤️ by Astro (Alexis Balthazard) using Astro.build -->
+
+		<style>
+			main:not([data-padding]) {
+				padding-top: 2.5em;
+				padding-bottom: 5em;
+			}
+		</style>
+	</body>
 </html>
-
-<style>
-	main:not([data-padding]) {
-		padding-top: 2.5em;
-		padding-bottom: 5em;
-	}
-</style>
