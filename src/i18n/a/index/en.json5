@@ -1,11 +1,11 @@
 {
 	title: 'Alexis Balthazard',
-	description: "People call me Alexis Balthazard and i'm a web developper",
+	description: "People call me Alexis Balthazard and i'm a full-stack web developper",
 	headings: {
-		h1: "# People call me **Alexis Balthazard**<br><small> and i'm a web developper</small>",
-		'things-i-do': "I can do things",
-		'things-im-on': "I've some social networks",
-		'things-i-use': "I can use all these things",
+		h1: "# People call me **Alexis Balthazard**<br><small> and i'm a full-stack web developper</small>",
+		'things-i-do': "Things i do",
+		'things-im-on': "Where i talk",
+		'things-i-use': "Things i use everyday",
 		'things-i-created': "These are project i've been working on",
 		'things-i-like': "Take a look at theses beautiful tools",
 	},
@@ -16,7 +16,8 @@
 		"Drawings on ms paint",
 		"A well organized git repository",
 		"Prototypes on Figma",
-		"Open-source"
+		"Open-source",
+		"Dev everywhere, anywhere",
 	],
 	'things-i-use': [
 		"HTML",
@@ -37,6 +38,8 @@
 		"Putty",
 		"Git",
 		"Continuous Integration",
+		"Flutter",
+		"Dart",
 	],
 	'things-i-created': [
 		{
@@ -54,8 +57,8 @@
 				}
 			],
 			img: {
-				src: "/public/assets/hexarolls.png",
-				alt: "Hexarolls"
+				slug: "hexarolls",
+				alt: "HexaRolls"
 			}
 		},
 		{
@@ -73,8 +76,8 @@
 				}
 			],
 			img: {
-				src: "/public/assets/hexadices.png",
-				alt: "Hexarolls"
+				slug: "hexadices",
+				alt: "HexaDices"
 			}
 		},
 		{
@@ -88,7 +91,7 @@
 				}
 			],
 			img: {
-				src: "/public/assets/facilpayment.png",
+				slug: "facilpayment",
 				alt: "Facilpayment"
 			}
 		},
@@ -98,7 +101,7 @@
 			description: "Sets of minimalist templates for creating websites.",
 			links: [],
 			img: {
-				src: "/public/assets/blank_.webp",
+				slug: "blank_",
 				alt: "Blank"
 			}
 		},
@@ -108,7 +111,7 @@
 			description: "An old service for managing and sharing online roleplay games.",
 			links: [],
 			img: {
-				src: "/public/assets/annexe.webp",
+				slug: "annexe",
 				alt: "Annexe.me"
 			}
 		}
@@ -129,7 +132,7 @@
 				}
 			],
 			img: {
-				src: "/public/assets/astro.png",
+				slug: "astro",
 				alt: "Astro"
 			}
 		},
@@ -140,7 +143,7 @@
 			links: [
 				{
 					title: "GitHub",
-					url: "https://github.com/TuSimple/naive-ui"
+					url: "https://github.com/tusen-ai/naive-ui"
 				},
 				{
 					title: "Documentation",
@@ -148,27 +151,8 @@
 				}
 			],
 			img: {
-				src: "/public/assets/naive-ui.png",
+				slug: "naive-ui",
 				alt: "Naive UI"
-			}
-		},
-		{
-			title: "Files",
-			slug: "files",
-			description: "A intuitive and powerful windows file manager for your files.",
-			links: [
-				{
-					title: "GitHub",
-					url: "https://github.com/files-community/Files"
-				},
-				{
-					title: "Download",
-					url: "https://files.community/download/stable"
-				}
-			],
-			img: {
-				src: "https://github.com/files-community/Files/raw/main/src/Files.Uwp/Assets/FilesHome.png",
-				alt: "Files"
 			}
 		},
 	],

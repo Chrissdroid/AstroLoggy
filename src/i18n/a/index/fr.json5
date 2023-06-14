@@ -1,11 +1,11 @@
 {
 	title: 'Alexis Balthazard',
-	description: "Je me nomme Alexis Balthazard et je suis développeur web",
+	description: "Je me nomme Alexis Balthazard et je suis développeur web full-stack",
 	headings: {
-		h1: '# Je me nomme **Alexis Balthazard**<br><small> et je suis développeur web</small>',
-		'things-i-do': "Je sais faire quelques trucs",
-		'things-im-on': "J'ai quelques réseaux sociaux",
-		'things-i-use': "Je sais aussi utiliser tout ça",
+		h1: '# Je me nomme **Alexis Balthazard**<br><small> et je suis développeur web full-stack</small>',
+		'things-i-do': "Ce que je fais",
+		'things-im-on': "Sur quoi je parle",
+		'things-i-use': "Ce que j'utilise dans mon quotidien",
 		'things-i-created': "Voici quelques projets sur lesquels j'ai travaillé",
 		'things-i-like': "Jetez un coup d'œil à ces projets que j'adore",
 	},
@@ -16,7 +16,8 @@
 		"Des dessins sur paint",
 		"Des dépots git bien rangés",
 		"Des prototypes sur Figma",
-		"De l'open-source"
+		"De l'open-source",
+		"Dev partout et sur tout",
 	],
 	'things-i-use': [
 		"HTML",
@@ -36,7 +37,9 @@
 		"Visual Studio Code",
 		"Putty",
 		"Git",
-		"L'intégration continue"
+		"L'intégration continue",
+		"Flutter",
+		"Dart",
 	],
 	'things-i-created': [
 		{
@@ -54,7 +57,7 @@
 				}
 			],
 			img: {
-				src: "/public/assets/hexarolls.png",
+				slug: "hexarolls",
 				alt: "Hexarolls"
 			}
 		},
@@ -73,8 +76,8 @@
 				}
 			],
 			img: {
-				src: "/public/assets/hexadices.png",
-				alt: "Hexarolls"
+				slug: "hexadices",
+				alt: "HexaDices"
 			}
 		},
 		{
@@ -88,7 +91,7 @@
 				}
 			],
 			img: {
-				src: "/public/assets/facilpayment.png",
+				slug: "facilpayment",
 				alt: "Facilpayment"
 			}
 		},
@@ -98,7 +101,7 @@
 			description: "Des sets de templates minimalistes pour créer des sites web.",
 			links: [],
 			img: {
-				src: "/public/assets/blank_.webp",
+				slug: "blank_",
 				alt: "Blank"
 			}
 		},
@@ -108,7 +111,7 @@
 			description: "Un ancien service de gestion et de partage en ligne de jeux de rôles.",
 			links: [],
 			img: {
-				src: "/public/assets/annexe.webp",
+				slug: "annexe",
 				alt: "Annexe.me"
 			}
 		}
@@ -129,7 +132,7 @@
 				}
 			],
 			img: {
-				src: "/public/assets/astro.png",
+				slug: "astro",
 				alt: "Astro"
 			}
 		},
@@ -140,7 +143,7 @@
 			links: [
 				{
 					title: "GitHub",
-					url: "https://github.com/TuSimple/naive-ui"
+					url: "https://github.com/tusen-ai/naive-ui"
 				},
 				{
 					title: "Documentation",
@@ -148,27 +151,8 @@
 				}
 			],
 			img: {
-				src: "/public/assets/naive-ui.png",
+				slug: "naive-ui",
 				alt: "Naive UI"
-			}
-		},
-		{
-			title: "Files",
-			slug: "files",
-			description: "Un gestionnaire de fichiers Windows avec un design puissant et intuitif.",
-			links: [
-				{
-					title: "GitHub",
-					url: "https://github.com/files-community/Files"
-				},
-				{
-					title: "Téléchargement",
-					url: "https://files.community/download/stable"
-				}
-			],
-			img: {
-				src: "https://github.com/files-community/Files/raw/main/src/Files.Uwp/Assets/FilesHome.png",
-				alt: "Files"
 			}
 		},
 	],
