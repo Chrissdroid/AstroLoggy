@@ -1,25 +1,25 @@
 ---
-import Head from "$/components/Head.astro";
+import Head from '$/components/Head.astro'
 import { readFileSync } from 'fs'
-import json5 from 'json5'
+import * as json5 from 'json5'
 
 const url = new URL(Astro.request.url)
 const translations = json5.parse(readFileSync(`./src/i18n/l/index/en.json5`).toString())
 ---
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-	<meta http-equiv="refresh" content="5; url=/en/l/">
-	<Head langs={['en', 'fr']} translations={translations} url={url}/>
-</head>
-<body>
-	<script is:inline define:vars={{url: Astro.request.url.origin}}>
-		const languages = ['en', 'fr'];
-		const language = navigator.language || navigator.userLanguage;
-		const currentLanguage = languages.indexOf(language.substr(0, 2)) > -1 ? language.substr(0, 2) : 'en';
+<html lang='en'>
+	<head>
+		<meta http-equiv='refresh' content='5; url=/en/l/' />
+		<Head langs={['en', 'fr']} {translations} {url} />
+	</head>
+	<body>
+		<script is:inline define:vars={{ url: Astro.request.url }}>
+			const languages = ['en', 'fr']
+			const language = navigator.language || navigator.userLanguage
+			const currentLanguage = languages.indexOf(language.substr(0, 2)) > -1 ? language.substr(0, 2) : 'en'
 
-		window.location.replace('/' + currentLanguage + '/l/');
-	</script>
-</body>
+			window.location.replace(currentLanguage + '/l/')
+		</script>
+	</body>
 </html>
