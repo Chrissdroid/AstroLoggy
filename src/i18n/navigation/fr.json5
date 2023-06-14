@@ -16,11 +16,13 @@
 		about: 'À propos',
 		blog: 'Blog',
 		projects: 'Projets',
+		contribute: 'Contribuer à ce site',
 		profile: 'Mon Profil',
 		contact: 'Nous Contacter',
 		login: 'Se connecter',
 		logout: 'Se déconnecter',
 		register: "S'inscrire",
+		share: "Partager la page",
 		change_language: 'Changer la langue',
 		change_theme: 'Changer le thème de couleur',
 		change_to_default_theme: "Changer vers le thème par défaut",
@@ -30,8 +32,10 @@
 	profile: {
 		image: 'Image de profil',
 		username: "Nom d'utilisateur",
+		defaultUsername: "Utilisateur lambda",
 		level: 'Niveau',
 		level_label: 'Niv° ',
 		points: 'Points',
+		nullPoints: 'Aucun point obtenu',
 	}
 }

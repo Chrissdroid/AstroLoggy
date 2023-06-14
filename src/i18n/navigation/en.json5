@@ -16,11 +16,13 @@
 		about: 'About Us',
 		blog: 'Blog',
 		projects: 'Projects',
+		contribute: 'Contribute to this website',
 		profile: 'My profile',
 		contact: 'Contact Us',
 		login: 'Log In',
 		logout: 'Log Out',
 		register: "Register",
+		share: "Share page",
 		change_language: "Change language",
 		change_theme: "Change color theme",
 		change_to_default_theme: "Change to default color theme",
@@ -30,8 +32,10 @@
 	profile: {
 		image: "User's Avatar",
 		username: "Username",
+		defaultUsername: "Wandering User",
 		level: 'Level',
 		level_label: 'Lvl° ',
 		points: 'Points',
+		nullPoints: 'No point obtained',
 	}
 }

@@ -143,4 +143,4 @@ class NavigationScreen extends Nav {
 }
 
 export const navigationMenu = new NavigationMenu('#navigation-toggler', '.navigation-menu', 'default', '#about')
-export const navigationScreen = new NavigationScreen('.navigation-screen-button', '.navigation-screen', 'E', 'Escape', true)
+// export const navigationScreen = new NavigationScreen('.navigation-screen-button', '.navigation-screen', 'E', 'Escape', true)
