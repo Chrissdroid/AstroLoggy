@@ -15,30 +15,47 @@ jobs:
 
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: 🛰️ Cache PNPM Modules
-        uses: actions/cache@v2
+      - name: 🛠️ Setup node
+        uses: actions/setup-node@v3
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-
+          node-version: 18
 
       - name: 🔗 PNPM Setup
-        uses: pnpm/action-setup@v2.1.0
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
         with:
           version: latest
-          run_install: true
+          run_install: false
+
+      - name: 📝 Get PNPM store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: 🛰️ Cache PNPM Modules
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: 🚧 Install dependencies
+        run: pnpm install
 
       - name: 🔧 Building Website
         run: pnpm run build --if-present
 
-      - name: 📂 Upload Data
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      - name: 📂 Upload via ftp
+        uses: sebastianpopp/ftp-action@releases/v2
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          host: ${{ secrets.FTP_SERVER }}
+          user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/
-          protocol: ftps
+          localDir: "dist"
+          remoteDir: "."
+          forceSsl: true
+          options: "-c -e --parallel=5 --use-pget=3 --verbose=3 --depth-first"
