@@ -1,0 +1,11 @@
+---
+export interface Props {
+	href: string
+	title: string
+}
+
+const { href, title } = Astro.props
+const { lang } = Astro.params as { [key: string]: string }
+---
+
+<a href={`/${lang}${href}`}>{title}</a>
