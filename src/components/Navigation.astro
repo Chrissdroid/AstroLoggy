@@ -1,106 +1,176 @@
 ---
 import { Icon } from 'astro-icon'
+
 import { readFileSync } from 'fs'
-import json5 from 'json5'
+import * as json5 from 'json5'
+
+import headerIcon from '@/header-icon.svg'
 
 export interface Props {
 	lang: string
 	langs?: string[]
 	url: URL
-	scroll: boolean
+	share?: {
+		url: string
+		text: string
+		title: string
+	}
 }
 
-const changeLanguage = (url: URL, lang: string) => `/${lang}${url.pathname.slice(3)}`;
+const changeLanguage = (url: URL, lang: string) => `/${lang}${url.pathname.slice(3)}`
 
 const getNewUrl = (breadcrumb: string[], index: number, lang: string) => {
-	return `/${lang}/${ breadcrumb.slice(0, (index + 1) - breadcrumb.length).join('/')}`
+	return `/${lang}/${breadcrumb.slice(0, index + 1 - breadcrumb.length).join('/')}`
 }
 
-const { lang, langs = null, url } = Astro.props
+const { lang, langs = null, url, share = null } = Astro.props
 const translation = json5.parse(readFileSync(`./src/i18n/navigation/${lang}.json5`).toString())
 const languages = json5.parse(readFileSync('./src/i18n/languages.json5').toString())
 
 const breadcrumb = url.pathname.split('/').filter(Boolean).slice(1)
+
+if (share) {
+	share.url = share.url.replace('HOST', Astro.site?.origin || '')
+	share.url = share.url.replace('LANG', lang)
+}
 ---
 
-<ol id="att1" role="list">
-	<li><a class="button" href="#content">{translation.goto.content}</a></li>
+<ol id='att1' role='list'>
+	<li><a class='button' href='#content'>{translation.goto.content}</a></li>
 </ol>
 
-<header id="actions">
-	<ol role="list" id="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
-		<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-			<a id="websiteName" itemscope itemtype="https://schema.org/Organization" itemprop="item" itemid={Astro.site.href} href={`/${lang}/`}>
-				<img itemprop="logo" src="/assets/header-icon.svg" width="32" height="32" alt={translation.favicon}>
-				<meta content="AstroLoggy" itemprop="name">
-			</a>
-			<meta itemprop="position" content="1" />
-		</li>
-		{breadcrumb.map((item: string, index: number) => [
-			<span>/</span>,
-			(index !== breadcrumb.length - 1) ? (
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-					<a itemscope itemtype="https://schema.org/WebPage" itemprop="item" itemid={getNewUrl(breadcrumb, index, lang)} href={getNewUrl(breadcrumb, index, lang)}>
-						<span itemprop="name">{decodeURI(item)}</span>
-					</a>
-					<meta itemprop="position" content={breadcrumb.indexOf(item) + 2} />
-				</li>
-			) : (
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-					<span itemprop="name">{decodeURI(item)}</span>
-					<meta itemprop="position" content={breadcrumb.indexOf(item) + 2} />
-				</li>
-			)
-		])}
-    </ol>
+<header id='actions'>
+	<div id='breadcrumb-container'>
+		<ol role='list' id='breadcrumb' itemscope itemtype='https://schema.org/BreadcrumbList'>
+			<li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'>
+				<a
+					id='websiteName'
+					itemscope
+					itemtype='https://schema.org/Organization'
+					itemprop='item'
+					itemid={Astro.site?.href}
+					href={`/${lang}/`}>
+					<img itemprop='logo' src={headerIcon.src} width='32' height='32' alt={translation.favicon} />
+					<meta content='AstroLoggy' itemprop='name' />
+				</a>
+				<meta itemprop='position' content='1' />
+			</li>
+			{
+				breadcrumb.map((item: string, index: number) => [
+					<span>/</span>,
+					index !== breadcrumb.length - 1 ? (
+						<li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'>
+							<a
+								itemscope
+								itemtype='https://schema.org/WebPage'
+								itemprop='item'
+								itemid={getNewUrl(breadcrumb, index, lang)}
+								href={getNewUrl(breadcrumb, index, lang)}>
+								<span itemprop='name'>{decodeURI(item)}</span>
+							</a>
+							<meta itemprop='position' content={`${breadcrumb.indexOf(item) + 2}`} />
+						</li>
+					) : (
+						<li itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'>
+							<span itemprop='name'>{decodeURI(item)}</span>
+							<meta itemprop='position' content={`${breadcrumb.indexOf(item) + 2}`} />
+						</li>
+					),
+				])
+			}
+		</ol>
+	</div>
 
-	<ul role="list" id="options">
+	<ul role='list' id='options'>
 		<li>
-			<button id="themeButton" type="button" aria-label={translation.actions.change_to_light_theme} data-active="light-theme" data-light={translation.actions.change_to_light_theme} data-dark={translation.actions.change_to_dark_theme} data-default={translation.actions.change_to_default_theme}>
-				<i class="theme dark-theme" aria-hidden="true"><Icon name="radix-icons:moon" /></i>
-				<i class="theme light-theme" aria-hidden="true"><Icon name="radix-icons:sun" /></i>
-				<i class="theme default" aria-hidden="true"><Icon name="radix-icons:globe" /></i>
+			<button
+				id='themeButton'
+				type='button'
+				aria-label={translation.actions.change_to_light_theme}
+				data-active='light-theme'
+				data-light={translation.actions.change_to_light_theme}
+				data-dark={translation.actions.change_to_dark_theme}
+				data-default={translation.actions.change_to_default_theme}>
+				<i class='theme dark-theme' aria-hidden='true'><Icon name='radix-icons:moon' /></i>
+				<i class='theme light-theme' aria-hidden='true'><Icon name='radix-icons:sun' /></i>
+				<i class='theme default' aria-hidden='true'><Icon name='radix-icons:globe' /></i>
 			</button>
 		</li>
-		{langs && (
-			<li>
-				<button id="languageButton" type="button">
-					{translation.actions.change_language}
-					<i id="languageButtonIcon" aria-hidden="true"><Icon name="radix-icons:chevron-down" /></i>
-				</button>
-			</li>
-		)}
+		{
+			share && (
+				<li>
+					<button id='shareButton' type='button' aria-label={translation.actions.share} data-url={share.url} data-title={share.title} data-text={share.text}>
+						<i id='shareButtonIcon' aria-hidden='true'>
+							<Icon name='ic:round-share' />
+						</i>
+					</button>
+				</li>
+			)
+		}
+		{
+			langs && (
+				<li>
+					<button id='languageButton' type='button'>
+						{translation.actions.change_language}
+						<i id='languageButtonIcon' aria-hidden='true'>
+							<Icon name='radix-icons:chevron-down' />
+						</i>
+					</button>
+				</li>
+			)
+		}
 	</ul>
 </header>
 
-<section id="navigation">
-	<button id="navigation-toggler" type="button" aria-label={translation.open} data-label-open={translation.open} data-label-close={translation.close}>
-		<i data-mode="scrollDown" aria-hidden="true"></i>
+<section id='navigation'>
+	<button
+		id='navigation-toggler'
+		type='button'
+		aria-label={translation.open}
+		data-label-open={translation.open}
+		data-label-close={translation.close}>
+		<i data-mode='scrollDown' aria-hidden='true'></i>
 	</button>
 
 	<nav>
-		<ol role="list">
+		<ol role='list'>
 			<li>
-				<a href={`/${lang}`} class="button" aria-label={translation.actions.home} data-tippy-content={translation.actions.home}>
-					<span class="sr-only">{translation.actions.home}</span>
-					<i aria-hidden="true"><Icon name="radix-icons:home" /></i>
+				<a
+					href={`/${lang}`}
+					class='button'
+					aria-label={translation.actions.home}
+					data-tippy-content={translation.actions.home}>
+					<span class='sr-only'>{translation.actions.home}</span>
+					<i aria-hidden='true'><Icon name='radix-icons:home' /></i>
 				</a>
 			</li>
 			<li>
-				<a href={`/${lang}/about`} class="button" aria-label={translation.actions.about} data-tippy-content={translation.actions.about}>
-					<span class="sr-only">{translation.actions.about}</span>
-					<i aria-hidden="true"><Icon name="radix-icons:info-circled" /></i>
+				<a
+					href={`/${lang}/about`}
+					class='button'
+					aria-label={translation.actions.about}
+					data-tippy-content={translation.actions.about}>
+					<span class='sr-only'>{translation.actions.about}</span>
+					<i aria-hidden='true'><Icon name='radix-icons:info-circled' /></i>
 				</a>
 			</li>
 			<li>
-				<a href={`/${lang}/blog`} class="button" aria-label={translation.actions.blog} data-tippy-content={translation.actions.blog}>
-					<span class="sr-only">{translation.actions.blog}</span>
-					<i aria-hidden="true"><Icon name="radix-icons:chat-bubble" /></i>
+				<a
+					href={`/${lang}/blog`}
+					class='button'
+					aria-label={translation.actions.blog}
+					data-tippy-content={translation.actions.blog}>
+					<span class='sr-only'>{translation.actions.blog}</span>
+					<i aria-hidden='true'><Icon name='radix-icons:chat-bubble' /></i>
 				</a>
 			</li>
 			<li>
-				<a href={`/${lang}/contact`} class="button" aria-label={translation.actions.contact} data-tippy-content={translation.actions.contact}>
-					<i aria-hidden="true"><Icon name="radix-icons:pencil-2" /></i>
+				<a
+					href={`/${lang}/contact`}
+					class='button'
+					aria-label={translation.actions.contact}
+					data-tippy-content={translation.actions.contact}>
+					<i aria-hidden='true'><Icon name='radix-icons:pencil-2' /></i>
 				</a>
 			</li>
 			<!-- <li>
@@ -166,34 +236,42 @@ const breadcrumb = url.pathname.split('/').filter(Boolean).slice(1)
 		</ol>
 	</section> -->
 
-	<section class="navigation-menu" tabindex={-1} aria-hidden="true">
-		<!-- <header>
-			<dl class="profile">
-				<div class="image">
+	<section class='navigation-menu' tabindex={-1} aria-hidden='true'>
+		<header>
+			<dl class='profile'>
+				<div class='image'>
 					<dt>{translation.profile.image}</dt>
-					<dd><img src="https://picsum.photos/48" alt={translation.profile.image} loading="lazy"/></dd>
+					<dd>
+						<img src='https://picsum.photos/48' alt={translation.profile.image} loading='lazy' />
+					</dd>
 				</div>
 
-				<div class="username">
+				<div class='username'>
 					<dt>{translation.profile.username}</dt>
-					<dd>Astroalex</dd>
+					<dd>{translation.profile.defaultUsername}</dd>
 				</div>
 
-				<div class="level">
+				<div class='level'>
 					<dt>{translation.profile.level}</dt>
-					<dd data-label={translation.profile.level_label}>1</dd>
+					<dd data-label={translation.profile.level_label}>0</dd>
 				</div>
 
-				<div class="points">
+				<div class='points'>
 					<dt>{translation.profile.points}</dt>
-					<dd>0</dd>
+					<dd>{translation.profile.nullPoints}</dd>
 				</div>
 			</dl>
-		</header> -->
+		</header>
 		<ol>
 			<!-- <li><a href="">{translation.actions.profile}</a></li> -->
-			<li><a href={`/${lang}/projects`}>{translation.actions.projects}</a></li>
-			<li><a href={`/${lang}/contact`}>{translation.actions.contact}</a></li>
+			<li>
+				<a href='https://github.com/Chrissdroid/AstroLoggy'>
+					<Icon name='ri:github-fill' />
+					{translation.actions.contribute}
+				</a>
+			</li>
+			<!-- <li><a href={`/${lang}/projects`}>{translation.actions.projects}</a></li> -->
+			<!-- <li><a href={`/${lang}/contact`}>{translation.actions.contact}</a></li> -->
 			<!-- <li>
 				<ol>
 					<li><a class="button" href="">{translation.actions.login}</a></li>
@@ -204,95 +282,129 @@ const breadcrumb = url.pathname.split('/').filter(Boolean).slice(1)
 	</section>
 </section>
 
-{langs && (
-	<div id="language-picker">
-		<ol id="language-list" role="list">
-			{langs.map(lg => (
-				<li>
-					<a lang={lg} class={(lg == lang ? 'active' : null) + ' button'} href={changeLanguage(url, lg)}>
-						{languages[lg].name || ''}
-						<i class="flag-icon" aria-hidden="true"><Icon pack="emojione-v1" name={languages[lg].flag} /></i>
-					</a>
-				</li>
-			))}
-		</ol>
-	</div>
-)}
+{
+	langs && (
+		<div id='language-picker'>
+			<ol id='language-list' role='list'>
+				{langs.map(lg => (
+					<li>
+						<a lang={lg} class={(lg == lang ? 'active' : null) + ' button'} href={changeLanguage(url, lg)}>
+							{languages[lg].name || ''}
+							<i class='flag-icon' aria-hidden='true'>
+								<Icon pack='emojione-v1' name={languages[lg].flag} />
+							</i>
+						</a>
+					</li>
+				))}
+			</ol>
+		</div>
+	)
+}
 
 <script>
-	import tippy, { createSingleton } from 'tippy.js';
-	import { navigationMenu, navigationScreen } from '$/scripts/navigation.ts';
-	import DOMPurify from 'dompurify';
+	import tippy, { createSingleton, type PopperElement } from 'tippy.js'
+	import { navigationMenu } from '$/scripts/navigation'
+	import DOMPurify from 'dompurify'
 
-	const intersectionObserver = (el, callback) => {
-		if (import.meta.SSR || !el) return false
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
-				callback(entry.isIntersecting)
-			})
-		}, {
-			root: null,
-			threshold: 0.33
-		})
+	const intersectionObserver = (el: HTMLElement | null, callback: (isIntersecting: boolean) => void) => {
+		if (import.meta.env.SSR || !el) return false
+		const observer = new IntersectionObserver(
+			entries => {
+				entries.forEach(entry => {
+					callback(entry.isIntersecting)
+				})
+			},
+			{
+				root: null,
+				threshold: 0.33,
+			}
+		)
 		observer.observe(el)
 	}
 
 	if (typeof window !== 'undefined') {
-
-		if (window.trustedTypes && window.trustedTypes.createPolicy) {
-			window.trustedTypes.createPolicy('default', {
-				createHTML: (string) => DOMPurify.sanitize(string, {RETURN_TRUSTED_TYPE: true}),
-			});
+		if ((window as any).trustedTypes && (window as any).trustedTypes.createPolicy) {
+			(window as any).trustedTypes.createPolicy('default', {
+				createHTML: string => DOMPurify.sanitize(string, { RETURN_TRUSTED_TYPE: true }),
+			})
 		}
 
-		const tippyInstances = tippy('body>#navigation nav>ol :is(.button, button)');
+		const tippyInstances = tippy('body>#navigation nav>ol :is(.button, button)')
 
 		createSingleton(tippyInstances, {
-			moveTransition: 'transform .35s cubic-bezier(.65,0,.35,1)',
+			moveTransition: 'transform .25s cubic-bezier(.65,0,.35,1.1)',
 			animation: 'shift-toward-subtle',
-			hideOnClick: false
-		});
+			hideOnClick: false,
+		})
 
-		if (document.querySelector('#languageButtonIcon')) {
-			tippy('#languageButtonIcon', {
-				content: document.querySelector('#language-picker'),
+		const languageButtonIcon: HTMLElement | null = document.querySelector('#languageButtonIcon')
+		if (languageButtonIcon) {
+			tippy(languageButtonIcon, {
+				content: document.querySelector('#language-picker') as HTMLElement,
 				arrow: true,
 				placement: 'bottom',
 				trigger: 'mouseenter focus',
 				interactive: true,
-				triggerTarget: document.querySelector('#languageButton'),
-				appendTo: document.querySelector('#languageButton'),
+				triggerTarget: document.querySelector('#languageButton') as HTMLElement,
+				appendTo: document.querySelector('#languageButton') as HTMLElement,
 				offset: [0, 15],
 			})
 		}
 
-		const themeButton = document.querySelector('#themeButton');
-		tippy(themeButton, {
-			content: themeButton.ariaLabel,
-			arrow: true,
-			placement: 'bottom',
-			trigger: 'mouseenter focus',
-			interactive: false,
-			appendTo: 'parent',
-			offset: [0, 15],
-			hideOnClick: false,
-		})
+		const themeButton: HTMLElement | null = document.querySelector('#themeButton')
+		if (themeButton) {
+			tippy(themeButton, {
+				content: themeButton.ariaLabel || '',
+				arrow: true,
+				placement: 'bottom',
+				trigger: 'mouseenter focus',
+				interactive: false,
+				appendTo: 'parent',
+				offset: [0, 15],
+				hideOnClick: false,
+			})
+		}
 
-		const themesList = [
-			'default',
-			'light',
-			'dark',
-		]
+		const shareButton: HTMLElement | null = document.querySelector('#shareButton')
+		if (shareButton) {
+			tippy(shareButton, {
+				content: shareButton.ariaLabel || '',
+				arrow: true,
+				placement: 'bottom',
+				trigger: 'mouseenter focus',
+				interactive: false,
+				appendTo: 'parent',
+				offset: [0, 15],
+				hideOnClick: false,
+			})
+		}
+
+		const share = (url?: string, title?: string, text?: string) => {
+			if (!navigator.share) return
+
+			return navigator.share({
+				url,
+				title,
+				text
+			})
+		}
+
+		const themesList = ['default', 'light', 'dark']
 
 		const loadTheme = (currentIndex, nextIndex) => {
+			if (!themeButton) return
+
 			localStorage.setItem('theme', nextIndex)
 			const nextThemeIndex = (nextIndex + 1) % themesList.length
 			themeButton.dataset.active = themesList[nextThemeIndex] + (nextThemeIndex == 0 ? '' : '-theme')
-			themeButton.ariaLabel = themeButton.dataset[themesList[nextThemeIndex]]
-			themeButton?._tippy?.setContent(themeButton.ariaLabel)
+			themeButton.ariaLabel = themeButton.dataset[themesList[nextThemeIndex]] as string
+			(themeButton as PopperElement)?._tippy?.setContent(themeButton.ariaLabel)
 
-			if (themesList.some(t => document.documentElement.dataset.theme.split(' ').includes(t))) {
-				document.documentElement.dataset.theme = document.documentElement.dataset.theme.replace(themesList[currentIndex], themesList[nextIndex])
+			if (themesList.some(t => document.documentElement.dataset.theme?.split(' ').includes(t))) {
+				document.documentElement.dataset.theme = document.documentElement.dataset.theme?.replace(
+					themesList[currentIndex],
+					themesList[nextIndex]
+				)
 			} else if (document.documentElement.dataset.theme) {
 				document.documentElement.dataset.theme += ' ' + themesList[nextIndex]
 			} else {
@@ -301,7 +413,8 @@ const breadcrumb = url.pathname.split('/').filter(Boolean).slice(1)
 		}
 
 		const changeTheme = () => {
-			const currentTheme = localStorage.getItem('theme') || themesList.indexOf(themeButton.dataset.active)
+			if (!themeButton) return
+			const currentTheme = localStorage.getItem('theme') || themesList.indexOf(themeButton.dataset.active || '')
 			if (currentTheme == -1 || isNaN(+currentTheme)) {
 				localStorage.setItem('theme', '0')
 				themeButton.dataset.active = 'default'
@@ -312,19 +425,28 @@ const breadcrumb = url.pathname.split('/').filter(Boolean).slice(1)
 		}
 
 		if (localStorage.getItem('theme')) loadTheme(0, localStorage.getItem('theme') || 0)
-		themeButton.addEventListener('click', changeTheme, {
+		themeButton?.addEventListener('click', changeTheme, {
+			passive: true,
+		})
+
+		shareButton?.addEventListener('click', () => {
+			share(shareButton.dataset.url, shareButton.dataset.title, shareButton.dataset.text)
+		}, {
 			passive: true
-		});
+		})
 
-		intersectionObserver(document.querySelector('#index'), (isIntersecting) => isIntersecting ?
+		intersectionObserver(document.querySelector('#index'), isIntersecting => {
+			if (isIntersecting) {
 				navigationMenu.changeMode('scrollDown')
-				:
-				navigationMenu.mode == 'default' ?
-					null
-					:
-					navigationMenu.changeMode('default'))
+			} else if (navigationMenu.mode == 'default') {
+				return
+			} else {
+				navigationMenu.changeMode('default')
+			}
+		})
 
-		window.navigationMenu = navigationMenu;
-		window.navigationScreen = navigationScreen;
+		// @ts-ignore
+		window.navigationMenu = navigationMenu
+		// window.navigationScreen = navigationScreen;
 	}
 </script>
