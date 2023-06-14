@@ -2,41 +2,37 @@
 import Layout from '$/layouts/PageLayout.astro'
 import HeaderAnchor from '$/components/HeaderAnchor.astro'
 
-import { Markdown } from 'astro/components'
+import Markdown from '@astrojs/markdown-component';
 import { createI18n } from '$/scripts/i18n'
+import { getCollection, type CollectionEntry } from "astro:content";
 
 export const getStaticPaths = createI18n('blog')
 const { translations, langs } = Astro.props
 const { lang } = Astro.params as { [key: string]: string }
 
-interface Frontmatter {
-	title: string;
-	description?: string;
-	image?: {
-		src: string;
-		alt: string;
+const post = await getCollection('blog')
+
+const getSlugInfo = (post: CollectionEntry<"blog">) => {
+	const [lang, slug]: string[] = post.slug.split('/')
+
+	return {
+		lang,
+		slug,
 	}
-	modified_at?: string;
-	published_at: string;
-	author?: {
-		name: string;
-		url: string;
-	}
-	draft?: boolean;
-	lang: string;
-	theme?: string;
 }
 
-const post = await Astro.glob<Frontmatter>(`/src/articles/*.md`)
-const sortedPosts = post.filter(post => !post.frontmatter.draft && lang === post.frontmatter.lang).sort((a, b) => {
-	return new Date(b.frontmatter.published_at).getTime() - new Date(a.frontmatter.published_at).getTime()
+const sortedPosts = post.filter(post => {
+	const { lang: postLang } = getSlugInfo(post)
+
+	return !post.data.draft && lang === postLang
+}).sort((a, b) => {
+	return b.data.published_at.getTime() - a.data.published_at.getTime()
 })
 
-const getId = (path: string) => path.split('/').pop().split('.').shift()
-const getDateToEST = (date: string) => {
-	const dateParts = date.split("/")
+const getId = (post: CollectionEntry<"blog">) => {
+	const {slug} = getSlugInfo(post)
 
-	return new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]))
+	return slug
 }
 ---
 
@@ -52,29 +48,29 @@ const getDateToEST = (date: string) => {
 		<ol id="articles-list" role="list">
 			{sortedPosts.map((post) => (
 				<li>
-					<article data-theme={post.frontmatter.theme} itemscope itemtype="https://schema.org/BlogPosting">
+					<article data-theme={post.data.theme} itemscope itemtype="https://schema.org/BlogPosting">
 						<header>
 							<div class="temporal">
 								<p>
 									{translations.articles.published}
-									<date itemprop="datePublished" datetime={getDateToEST(post.frontmatter.published_at)} set:text={getDateToEST(post.frontmatter.published_at).toLocaleDateString(lang)}></date>
-									<date itemprop="dateModified" datetime={getDateToEST(post.frontmatter.modified_at || post.frontmatter.published_at)}></date>
+									<date itemprop="datePublished" datetime={post.data.published_at} set:text={post.data.published_at.toLocaleDateString(lang)}></date>
+									<date itemprop="dateModified" datetime={post.data.modified_at || post.data.published_at}></date>
 								</p>
 							</div>
-							<h3 id={getId(post.file)} itemprop="headline">
-								{post.frontmatter.title}
-								<HeaderAnchor lang={lang} id={getId(post.file)} />
+							<h3 id={getId(post)} itemprop="headline">
+								{post.data.title}
+								<HeaderAnchor lang={lang} id={getId(post)} />
 							</h3>
 							<p>
 								{translations.articles.by}
-								<a href={post.frontmatter.author.url} itemprop="author" set:text={post.frontmatter.author.name}></a>
+								<a href={post.data.author.url} itemprop="author" set:text={post.data.author.name}></a>
 							</p>
 						</header>
 
-						<Markdown content={post.frontmatter.description} />
+						<Markdown content={post.data.description} />
 
 						<footer>
-							<a itemprop="url" href={`/${lang}/blog/` + getId(post.file)}>{translations.articles.readMore}</a>
+							<a itemprop="url" href={`/${lang}/blog/` + getId(post)}>{translations.articles.readMore}</a>
 						</footer>
 					</article>
 				</li>

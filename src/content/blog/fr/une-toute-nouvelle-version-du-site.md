@@ -1,9 +1,7 @@
 ---
 title: Une toute nouvelle version du site !
 description: Une version plus propre et plus facile à utiliser, avec un design remis à neuf !
-published_at: 11/04/2022
-draft: false
-lang: fr
+published_at: 2022-04-11
 author:
   name: Alexis Balthazard
   url: /alexis-balthazard

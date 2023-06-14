@@ -1,9 +1,7 @@
 ---
 title: How i created this website
 description: Steps i took to create this website and my approach to it
-published_at: 25/04/2022
-draft: false
-lang: en
+published_at: 2022-04-25
 author:
   name: Alexis Balthazard
   url: /alexis-balthazard

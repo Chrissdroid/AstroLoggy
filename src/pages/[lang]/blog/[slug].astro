@@ -1,51 +1,53 @@
 ---
 import Blog from '$/layouts/Blog.astro'
+import { Page } from '&/page';
+import { CollectionEntry, getCollection } from 'astro:content';
 
 import { readFileSync } from 'fs'
 import json5 from 'json5'
 
-interface Frontmatter {
-	title: string;
-	description?: string;
-	image?: {
-		src: string;
-		alt: string;
+export interface Props {
+	translations: {
+		[key: string]: any,
+		page: Page
 	}
-	modified_at?: string;
-	published_at: string;
-	author?: {
-		name: string;
-		url: string;
-	}
-	draft?: boolean;
-	lang: string;
-	theme: string;
+	post: CollectionEntry<"blog">
 }
 
 export const getStaticPaths = async () => {
-	const posts = await Astro.glob<Frontmatter>(`/src/articles/*.md`)
-	const sortedPosts = posts.filter(post => !post.frontmatter.draft)
+	const posts = await getCollection('blog');
+	const sortedPosts = posts.filter(post => !post.data.draft)
 
-	const getId = (path: string) => path.split('/').pop().split('.').shift()
+	const getSlugInfo = (post: CollectionEntry<"blog">) => {
+		const [lang, slug]: string[] = post.slug.split('/')
+
+		return {
+			lang,
+			slug,
+		}
+	}
 
 	return sortedPosts.map(post => {
+		const {slug, lang: postLang} = getSlugInfo(post)
+
 		return {
 			params: {
-				lang: post.frontmatter.lang,
-				slug: getId(post.file)
+				lang: postLang,
+				slug: slug
 			},
 			props: {
-				translations: json5.parse(readFileSync(`./src/i18n/blog/${post.frontmatter.lang}.json5`).toString()),
-				Post: post
+				translations: json5.parse(readFileSync(`./src/i18n/blog/${postLang}.json5`).toString()),
+				post
 			}
 		}
 	})
 }
-const { translations, Post = null } = Astro.props
+const { translations, post } = Astro.props
 const { lang } = Astro.params as { [key: string]: string }
+const { Content } = await post.render();
 
 ---
 
-<Blog {translations} {Post} {lang} image={Post.frontmatter.image} theme={Post.frontmatter.theme}>
-	<Post.Content />
+<Blog {translations} Post={post} {lang} theme={post.data.theme as "astro" | "loggy" | "default" | undefined}>
+	<Content />
 </Blog>
