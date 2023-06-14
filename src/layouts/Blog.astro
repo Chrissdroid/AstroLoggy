@@ -1,65 +1,64 @@
 ---
+import type { Page } from '&/page.d'
 import Layout from '$/layouts/PageLayout.astro'
 import Sidebar from '$/components/navigation/Sidebar.astro';
-import { Picture } from 'astro-imagetools/components'
+import { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 export interface Props {
 	lang: string
 	translations: {
-		[key: string]: string
+		[key: string]: any,
+		page: Page
 	}
-	scroll: boolean,
-	theme?: string
-	Post: any
-	image?: {
-		src: string;
-		alt: string;
-	}
+	theme?: "astro" | "loggy" | "default" | undefined
+	Post: CollectionEntry<'blog'>
 }
 
-const { translations, lang, scroll = false, theme = "default", Post, image = {src:''} } = Astro.props
-const getDateToEST = (date: string) => {
-	const dateParts = date.split("/")
+const { translations, lang, theme = "default", Post } = Astro.props
 
-	return new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]))
+const Headers = (await Post.render()).headings;
+
+const share = {
+	url: Astro.url.href,
+	title: Post.data.title,
+	text: Post.data.description,
 }
 
-const Headers = await Post.getHeaders();
 ---
 
-<Layout translations={{...translations, title: Post.frontmatter.title}} {lang} {theme} padding>
+<Layout translations={{...translations, title: Post.data.title}} {lang} {theme} {share} padding>
 
 	<article itemscope itemtype="https://schema.org/BlogPosting">
 		<header>
-			{image.src && (
-				<Picture
-					src={image.src}
-					alt={image?.alt}
-					objectFit="contain"
-					objectPosition="right 50%"
-					position="right"
+			{Post.data.image && (
+				<Image
+					src={Post.data.image.src}
+					alt={Post.data.image?.alt}
+					width={854}
+					height={480}
 				/>
 			)}
 			<div class="temporal">
 				<p>
 					{translations.articles.published}
-					<date itemprop="datePublished" datetime={getDateToEST(Post.frontmatter.published_at)} set:text={getDateToEST(Post.frontmatter.published_at).toLocaleDateString(lang)}></date>
-					{Post.frontmatter.modified_at && Post.frontmatter.published_at !== Post.frontmatter.modified_at ? (
+					<date itemprop="datePublished" datetime={Post.data.published_at} set:text={Post.data.published_at.toLocaleDateString(lang)}></date>
+					{Post.data.modified_at && Post.data.published_at !== Post.data.modified_at ? (
 						<span>
 							&mdash;&nbsp;{translations.articles.updated}
-							<date itemprop="dateModified" datetime={getDateToEST(Post.frontmatter.modified_at)} set:text={getDateToEST(Post.frontmatter.modified_at).toLocaleDateString(lang)}></date>
+							<date itemprop="dateModified" datetime={Post.data.modified_at} set:text={Post.data.modified_at.toLocaleDateString(lang)}></date>
 						</span>
 					): (
-						<date itemprop="dateModified" datetime={getDateToEST(Post.frontmatter.modified_at || Post.frontmatter.published_at)}></date>
+						<date itemprop="dateModified" datetime={Post.data.modified_at || Post.data.published_at}></date>
 					)}
 				</p>
 			</div>
 
-			<h1 itemprop="headline">{Post.frontmatter.title}</h1>
+			<h1 itemprop="headline">{Post.data.title}</h1>
 			<p>
 				{translations.articles.by}
-				<a href={Post.frontmatter.author.url} itemprop="author" itemscope itemtype="https://schema.org/Person">
-					{Post.frontmatter.author.name}
+				<a href={Post.data.author.url} itemprop="author" itemscope itemtype="https://schema.org/Person">
+					{Post.data.author.name}
 				</a>
 			</p>
 		</header>
@@ -100,16 +99,13 @@ article {
 
 		background: linear-gradient(60deg, var(--navigation-accent) 70%, transparent);
 
-		:global(.astro-imagetools-picture) {
+		img {
 			z-index: -1;
 			position: absolute !important;
 			right: 0;
 			top: 0;
 			height: 100% !important;
-
-			:global(.astro-imagetools-img) {
-				height: 100% !important;
-			}
+			width: auto;
 		}
 
 		.temporal {
