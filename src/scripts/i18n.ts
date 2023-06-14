@@ -1,6 +1,6 @@
 import { GetStaticPaths } from 'astro';
 import { readFileSync } from 'fs'
-import * as json5 from 'json5'
+import json5 from 'json5'
 
 const languages = [
 	'en',
