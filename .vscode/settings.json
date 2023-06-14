@@ -1,0 +1,18 @@
+{
+	"prettier.prettierPath": "./node_modules/prettier",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"prettier.documentSelectors": [
+		"**/*.astro"
+	],
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[astro]": {
+		"editor.defaultFormatter": "astro-build.astro-vscode"
+	},
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"files.associations": {
+		"*.mdx": "markdown"
+	}
+}

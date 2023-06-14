@@ -1,19 +1,16 @@
 {
-	"include": [
-		"src/**/*",
-		"@types/**/*",
-		"postcss.config.cjs",
-		"**/*.ts"
-	],
-	"exclude": [
-		"node_modules"
-	],
+	"extends": "astro/tsconfigs/base",
 	"compilerOptions": {
+		"strictNullChecks": true,
+		"allowImportingTsExtensions": true,
 		"baseUrl": "./",
+		"allowJs": true,
 		"paths": {
 			"$/*": ["src/*"],
 			"&/*": ["@types/*"],
-			"@/*": ["public/assets/*"],
+			"@/*": [
+				"src/assets/*"
+			],
 		},
 		"moduleResolution": "node",
 		"module": "ES2022",
