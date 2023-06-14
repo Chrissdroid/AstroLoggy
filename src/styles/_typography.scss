@@ -39,6 +39,7 @@ h6, .h6 {
 	color: var(--font-accent);
 	line-height: 1.33;
 	margin-bottom: 1.33rem;
+	font-weight: 900;
 
 	.header-anchor {
 		opacity: 0;
@@ -76,8 +77,8 @@ code, .code {
 }
 
 ::selection {
-	background-color: var(--glass-bg);
-	color: var(--glass-color);
+	background-color: hsl(206, 32%, 10%);
+	color: initial;
 }
 .sr-only {
 	position: absolute;
@@ -107,6 +108,7 @@ a,
 	padding-inline: .25em;
 	overflow: hidden;
 	cursor: pointer;
+	gap: .5ch;
 
 	&::after {
 		z-index: -1;
