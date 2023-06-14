@@ -1,0 +1,13 @@
+---
+import WipPlaceholder from '$/components/WipPlaceholder.astro'
+import Layout from '$/layouts/PageLayout.astro'
+import { createI18n } from '$/scripts/i18n'
+
+export const getStaticPaths = createI18n('libraries')
+const { translations, langs } = Astro.props
+const { lang } = Astro.params as { [key: string]: string }
+---
+
+<Layout {translations} {langs} {lang}>
+	<WipPlaceholder />
+</Layout>
