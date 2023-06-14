@@ -23,5 +23,7 @@
 		// 	'type': 'image/jpeg',
 		// 	'alt': 'Page Preview',
 		// }
-	}
+	},
+	rssTitle: "AstroLoggy's Blog",
+	rssDescription: 'Articles from the creators of AstroLoggy.info',
 }

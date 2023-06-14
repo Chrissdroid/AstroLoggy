@@ -54,6 +54,8 @@ const page = json5.parse(readFileSync(`./src/i18n/defaults/page/${lang}.json5`).
 	<link rel="alternate" href={changeLanguage(url, lg)} hreflang={lg} />
 ))}
 
+<link rel="alternate" type="application/rss+xml" href={`${url.origin}/${lang}/feed.xml`} title={page.rssTitle} />
+
 <meta property="og:locale" content={lang} />
 
 <title>{translations?.title || page.title} - AstroLoggy</title>
