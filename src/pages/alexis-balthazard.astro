@@ -19,7 +19,7 @@ const translations = json5.parse(readFileSync(`./src/i18n/a/index/en.json5`).toS
 			const language = navigator.language || navigator.userLanguage
 			const currentLanguage = languages.indexOf(language.substr(0, 2)) > -1 ? language.substr(0, 2) : 'en'
 
-			window.location.replace(currentLanguage + '/a/')
+			window.location.replace('/' + currentLanguage + '/a/')
 		</script>
 	</body>
 </html>
