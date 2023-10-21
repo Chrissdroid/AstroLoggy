@@ -28,6 +28,11 @@ abstract class Nav {
 				? document.querySelector(navigator)
 				: navigator
 		) as HTMLElement
+		;[].forEach.call(this.togglers, (el: HTMLElement) =>
+			el.addEventListener('click', () => this.toggle(), {
+				passive: true
+			})
+		)
 
 		document.addEventListener('keydown', this.onKeyDown)
 		document.addEventListener('keyup', this.onKeyUp)
