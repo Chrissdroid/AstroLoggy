@@ -25,9 +25,6 @@ jobs:
       - name: 🚧 Install dependencies
         run: bun install
 
-      - name: 🚧 Install dependencies
-        run: pnpm install
-
       - name: 🔧 Building Website
         run: bun run -b build --if-present
 
