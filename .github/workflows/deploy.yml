@@ -23,7 +23,7 @@ jobs:
           bun-version: latest
 
       - name: 🚧 Install dependencies
-        run: bun install --production
+        run: bun install
 
       - name: 🔧 Building Website
         run: bun run -b build --if-present
