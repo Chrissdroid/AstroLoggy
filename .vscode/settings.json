@@ -1,6 +1,20 @@
 {
+	"emmet.includeLanguages": {
+		"vue-html": "html",
+		"javascript": "javascriptreact",
+		"markdown": "html"
+	},
 	"prettier.prettierPath": "./node_modules/prettier",
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.wrappingIndent": "indent",
+	"editor.detectIndentation": true,
+	"editor.tabSize": 4,
+	"editor.renderWhitespace": "all",
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"astro"
+	],
 	"prettier.documentSelectors": [
 		"**/*.astro"
 	],
@@ -14,5 +28,9 @@
 	"editor.formatOnPaste": true,
 	"files.associations": {
 		"*.mdx": "markdown"
-	}
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"browse-lite.startUrl": "http://localhost:3000"
 }
