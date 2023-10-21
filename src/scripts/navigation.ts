@@ -18,32 +18,58 @@ abstract class Nav {
 		protected blockScroll: Boolean = false
 	) {
 		this.listenKey = true
-		this.togglers = ((typeof togglers == 'string') ? document.querySelectorAll(togglers) : togglers) as NodeListOf<HTMLElement>
-		this.navigator = ((typeof navigator == 'string') ? document.querySelector(navigator) : navigator) as HTMLElement
+		this.togglers = (
+			typeof togglers == 'string'
+				? document.querySelectorAll(togglers)
+				: togglers
+		) as NodeListOf<HTMLElement>
+		this.navigator = (
+			typeof navigator == 'string'
+				? document.querySelector(navigator)
+				: navigator
+		) as HTMLElement
 
-		[].forEach.call(this.togglers, (el: HTMLElement) => el.addEventListener('click', () => this.toggle(), {
-			passive: true
-		}))
-		document.addEventListener('keydown', (e: KeyboardEvent) => this.shortcutHandle(e))
-		document.addEventListener('keyup', (e: KeyboardEvent) => this.preventKeySpam(e))
+		document.addEventListener('keydown', this.onKeyDown)
+		document.addEventListener('keyup', this.onKeyUp)
+	}
+
+	protected onKeyDown = (e: KeyboardEvent): void => {
+		this.shortcutHandle(e)
+	}
+
+	protected onKeyUp = (e: KeyboardEvent): void => {
+		this.preventKeySpam(e)
 	}
 
 	protected focusOutHandle = (e: FocusEvent): void => {
-		if (!this.navigator.contains(e.relatedTarget as HTMLElement) && ![].some.call(this.togglers, el => el === e.relatedTarget as HTMLElement) && this.opened) {
+		if (
+			!this.navigator.contains(e.relatedTarget as HTMLElement) &&
+			![].some.call(
+				this.togglers,
+				(el) => el === (e.relatedTarget as HTMLElement)
+			) &&
+			this.opened
+		) {
 			this.close()
 		}
 	}
 
 	protected shortcutHandle = (e: KeyboardEvent): void => {
-		let key = e.key, source = e.target as HTMLElement, exclude = ['input', 'textarea']
-		if (!this.listenKey || exclude.indexOf(source.tagName.toLowerCase()) > 0 || (key != this.openKey && key != this.closeKey)) return
+		let key = e.key,
+			source = e.target as HTMLElement,
+			exclude = ['input', 'textarea']
+		if (
+			!this.listenKey ||
+			exclude.indexOf(source.tagName.toLowerCase()) > 0 ||
+			(key != this.openKey && key != this.closeKey)
+		)
+			return
 		e.preventDefault()
 		this.listenKey = false
 
 		if (key == this.openKey) {
 			this.toggle()
-		}
-		else if (this.opened && key == this.closeKey) {
+		} else if (this.opened && key == this.closeKey) {
 			this.close()
 		}
 
@@ -55,14 +81,17 @@ abstract class Nav {
 	}
 
 	public open(disableAutoFocus: boolean = false): void {
-		if (this.opened) return;
-		if (this.blockScroll) document.body.classList.add('block-scroll');
-
-		[].forEach.call(this.togglers, (el: HTMLElement) => {
-			if (el.ariaLabel) el.ariaLabel = el.dataset.labelClose || 'Close navigation'
+		if (this.opened) return
+		if (this.blockScroll) document.body.classList.add('block-scroll')
+		;[].forEach.call(this.togglers, (el: HTMLElement) => {
+			if (el.ariaLabel)
+				el.ariaLabel = el.dataset.labelClose || 'Close navigation'
 			else if (el.dataset.tippyContent) {
-				el.dataset.tippyContent = el.dataset.labelClose || 'Close navigation';
-				(el as any)?._tippy?.setContent(el.dataset.labelClose || 'Close navigation')
+				el.dataset.tippyContent =
+					el.dataset.labelClose || 'Close navigation'
+				;(el as any)?._tippy?.setContent(
+					el.dataset.labelClose || 'Close navigation'
+				)
 			}
 			el.classList.add('active')
 		})
@@ -77,14 +106,17 @@ abstract class Nav {
 	}
 
 	public close(): void {
-		if (!this.opened) return;
-		if (this.blockScroll) document.body.classList.remove('block-scroll');
-
-		[].forEach.call(this.togglers, (el: HTMLElement) => {
-			if (el.ariaLabel) el.ariaLabel = el.dataset.labelOpen || 'Open navigation'
+		if (!this.opened) return
+		if (this.blockScroll) document.body.classList.remove('block-scroll')
+		;[].forEach.call(this.togglers, (el: HTMLElement) => {
+			if (el.ariaLabel)
+				el.ariaLabel = el.dataset.labelOpen || 'Open navigation'
 			else if (el.dataset.tippyContent) {
-				el.dataset.tippyContent = el.dataset.labelOpen || 'Open navigation';
-				(el as any)?._tippy?.setContent(el.dataset.labelOpen || 'Open navigation')
+				el.dataset.tippyContent =
+					el.dataset.labelOpen || 'Open navigation'
+				;(el as any)?._tippy?.setContent(
+					el.dataset.labelOpen || 'Open navigation'
+				)
 			}
 			el.classList.remove('active')
 		})
@@ -105,16 +137,24 @@ class NavigationMenu extends Nav {
 	public mode: 'scrollDown' | 'default' = 'default'
 	protected targetSection: HTMLElement
 
-	constructor(togglers: NodeListOf<HTMLElement> | String, navigator: HTMLElement | String, mode: 'scrollDown' | 'default', targetSection: HTMLElement | String) {
+	constructor(
+		togglers: NodeListOf<HTMLElement> | String,
+		navigator: HTMLElement | String,
+		mode: 'scrollDown' | 'default',
+		targetSection: HTMLElement | String
+	) {
 		super(togglers, navigator, 'e', 'Escape')
 		this.changeMode(mode)
-		this.targetSection = ((typeof targetSection == 'string') ? document.querySelector(targetSection) : targetSection) as HTMLElement
-
+		this.targetSection = (
+			typeof targetSection == 'string'
+				? document.querySelector(targetSection)
+				: targetSection
+		) as HTMLElement
 	}
 
 	public changeMode(mode: 'scrollDown' | 'default'): void {
-		if (this.opened) this.close();
-		[].forEach.call(this.togglers, (el: HTMLElement) => {
+		if (this.opened) this.close()
+		;[].forEach.call(this.togglers, (el: HTMLElement) => {
 			const icon = el.querySelector('i') as HTMLElement
 			icon.dataset.mode = mode
 		})
