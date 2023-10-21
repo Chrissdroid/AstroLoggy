@@ -1,10 +1,7 @@
 {
 	"extends": "astro/tsconfigs/base",
 	"compilerOptions": {
-		"strictNullChecks": true,
-		"allowImportingTsExtensions": true,
-		"baseUrl": "./",
-		"allowJs": true,
+		"baseUrl": ".",
 		"paths": {
 			"$/*": ["src/*"],
 			"&/*": ["@types/*"],
@@ -12,10 +9,9 @@
 				"src/assets/*"
 			],
 		},
-		"moduleResolution": "node",
-		"module": "ES2022",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"types": ["astro/env"]
+		"types": [
+			"astro/client",
+			"bun-types"
+		]
 	}
 }

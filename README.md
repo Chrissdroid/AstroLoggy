@@ -3,7 +3,7 @@
 
 A website for two long time friends build with [Astro](https://astro.build/)
 
-
+Bun is required instead of node, Node File api as been switched to Bun's File I/O api.
 
 ## Run Locally
 
@@ -19,16 +19,16 @@ Go to the project directory
 cd AstroLoggy
 ```
 
-Install dependencies (with pnpm)
+Install dependencies (using Bun)
 
 ```bash
-pnpm install
+bun install
 ```
 
-Start the server
+Start the dev server
 
 ```bash
-pnpm start
+bun run -b dev
 ```
 
 
