@@ -3,6 +3,7 @@
 	description: "il n'y a pas qu'une seule façon de nous contacter !",
 	form: {
 		title: "Formulaire de contact",
+		wip: "Formulaire en cours de développement, soyez patients",
 		name: "Nom",
 		email: "Email",
 		message: "Message",

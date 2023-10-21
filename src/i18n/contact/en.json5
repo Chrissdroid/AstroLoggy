@@ -3,6 +3,7 @@
 	description: "there is no `one-way-only` to contact us !",
 	form: {
 		title: "Contact Form",
+		wip: "Form still under development, please wait",
 		name: "Name",
 		email: "Email",
 		message: "Message",
