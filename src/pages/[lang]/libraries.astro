@@ -9,5 +9,5 @@ const { lang } = Astro.params as { [key: string]: string }
 ---
 
 <Layout {translations} {langs} {lang}>
-	<WipPlaceholder />
+	<WipPlaceholder lang={lang} />
 </Layout>
