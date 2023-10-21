@@ -15,6 +15,9 @@
   "author": "Alexis Balthazard <alexis31.balthazard@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "trustedDependencies": [
+    "sharp"
+  ],
   "devDependencies": {
     "@types/dompurify": "^3.0.4",
     "bun-types": "^1.0.7",
@@ -45,6 +48,7 @@
     "rehype-slug": "^6.0.0",
     "remark-textr": "^6.0.0",
     "sass": "^1.69.4",
+    "sharp": "^0.32.6",
     "svgo": "3.0.2",
     "tippy.js": "^6.3.7"
   }
