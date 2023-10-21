@@ -1,5 +1,8 @@
 {
 	"HeaderAnchor": {
 		label: "Copier le lien vers cet élément",
+	},
+	"Wip": {
+		title: "Cette page est encore en construction, revenez plus tard !"
 	}
 }

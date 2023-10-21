@@ -1,5 +1,8 @@
 {
 	"HeaderAnchor": {
 		label: "Copy link to this element",
+	},
+	"Wip": {
+		title: "This page is still under construction, come back later!"
 	}
 }

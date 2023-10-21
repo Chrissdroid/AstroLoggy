@@ -1,10 +1,19 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
+import json5 from 'json5'
+
+interface Props {
+	lang: string
+}
+
+const { lang } = Astro.props
+
+const translation = json5.parse(await Bun.file(`./src/i18n/components/${lang}.json5`).text())
 ---
 
 <section>
 	<Icon name='ic:round-construction' style='transform:scale(5);' />
-	<h1>This page is still under construction, come back later !</h1>
+	<h1>{translation.Wip.title}</h1>
 </section>
 
 <style>
