@@ -1,0 +1,30 @@
+---
+import { parseMarkdown } from '$/scripts/parseMarkdown'
+
+export interface Props {
+	content?: string | null
+	headingDiff?: number
+	renderLinksAsExternal?: boolean
+	renderImage?: boolean
+	breaks?: boolean
+}
+
+const {
+	content,
+	renderLinksAsExternal = true,
+	renderImage = false,
+	breaks = true
+} = Astro.props
+
+const markdownContent =
+	typeof content === 'undefined' || content === null ? '' : content
+
+const parsedHTML = parseMarkdown(
+	markdownContent,
+	renderLinksAsExternal,
+	renderImage,
+	breaks
+)
+---
+
+<Fragment set:html={parsedHTML} />
