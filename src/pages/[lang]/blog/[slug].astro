@@ -26,7 +26,7 @@ export const getStaticPaths = async () => {
 		}
 	}
 
-	return sortedPosts.map(async post => {
+	return await Promise.all(sortedPosts.map(async post => {
 		const {slug, lang: postLang} = getSlugInfo(post)
 
 		return {
@@ -39,7 +39,7 @@ export const getStaticPaths = async () => {
 				post
 			}
 		}
-	})
+	}))
 }
 const { translations, post } = Astro.props
 const { lang } = Astro.params as { [key: string]: string }
