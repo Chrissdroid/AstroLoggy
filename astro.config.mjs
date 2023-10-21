@@ -22,6 +22,8 @@ export default defineConfig({
 		optimizeHoistedScript: true
 	},
 	image: {
+		// Using squoosh because of a weird issue crashing when sharp is imported twice.
+		service: squooshImageService(),
 		remotePatterns: [{ hostname: '*.astrologgy.info' }]
 	},
 	root: '.',
