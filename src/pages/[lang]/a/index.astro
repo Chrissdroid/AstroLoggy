@@ -21,11 +21,11 @@ const ImageSlugs = {
 	blank_,
 	annexe,
 	astro,
-	'naive-ui': naiveUi,
+	'naive-ui': naiveUi
 }
 
-import { Icon } from 'astro-icon'
-import Markdown from '@astrojs/markdown-component'
+import { Icon } from 'astro-icon/components'
+import Markdown from '$/components/Markdown.astro'
 import { createI18n } from '$/scripts/i18n'
 
 export const getStaticPaths = createI18n('a/index')
@@ -35,22 +35,27 @@ const { lang } = Astro.params as { [key: string]: string }
 const share = {
 	url: 'HOST/alexis-balthazard/',
 	title: translations.title,
-	text: translations.description,
+	text: translations.description
 }
 ---
 
-<Layout {translations} {langs} {lang} theme='astro' {share}>
-	<section id='about-me'>
+<Layout {translations} {langs} {lang} theme="astro" {share}>
+	<section id="about-me">
 		<header>
-			<Image src={AlexisPicture} width={128} height={128} alt='Une photo de moi' />
+			<Image
+				src={AlexisPicture}
+				width={128}
+				height={128}
+				alt="Une photo de moi"
+			/>
 			<Markdown content={translations.headings.h1} />
 		</header>
 		<section>
-			<h2 id='things-i-do'>
+			<h2 id="things-i-do">
 				{translations.headings['things-i-do']}
-				<HeaderAnchor {lang} id='things-i-do' />
+				<HeaderAnchor {lang} id="things-i-do" />
 			</h2>
-			<ul role='list'>
+			<ul role="list">
 				{
 					translations['things-i-do'].map((thing: string) => (
 						<li>
@@ -61,37 +66,37 @@ const share = {
 			</ul>
 		</section>
 		<section>
-			<h2 id='things-im-on'>
+			<h2 id="things-im-on">
 				{translations.headings['things-im-on']}
-				<HeaderAnchor {lang} id='things-im-on' />
+				<HeaderAnchor {lang} id="things-im-on" />
 			</h2>
-			<ul role='list'>
+			<ul role="list">
 				<li>
-					<a href='https://twitter.com/Astroalex404'>
-						<Icon name='ri:twitter-fill' />
+					<a href="https://twitter.com/Astroalex404">
+						<Icon name="ri:twitter-fill" />
 						@astroalex_404
 					</a>
 				</li>
 				<li>
-					<a href='https://discordapp.com/users/207128825895714816/'>
-						<Icon name='ri:discord-fill' />
+					<a href="https://discordapp.com/users/207128825895714816/">
+						<Icon name="ri:discord-fill" />
 						@astroalex404
 					</a>
 				</li>
 				<li>
-					<a href='https://github.com/Chrissdroid'>
-						<Icon name='ri:github-fill' />
+					<a href="https://github.com/Chrissdroid">
+						<Icon name="ri:github-fill" />
 						Astroalex (Chrissdroid)
 					</a>
 				</li>
 			</ul>
 		</section>
 		<section>
-			<h2 id='things-i-use'>
+			<h2 id="things-i-use">
 				{translations.headings['things-i-use']}
-				<HeaderAnchor {lang} id='things-i-use' />
+				<HeaderAnchor {lang} id="things-i-use" />
 			</h2>
-			<ul role='list'>
+			<ul role="list">
 				{
 					translations['things-i-use'].map((thing: string) => (
 						<li>
@@ -102,25 +107,30 @@ const share = {
 			</ul>
 		</section>
 		<section>
-			<h2 id='things-i-created'>
+			<h2 id="things-i-created">
 				{translations.headings['things-i-created']}
-				<HeaderAnchor {lang} id='things-i-created' />
+				<HeaderAnchor {lang} id="things-i-created" />
 			</h2>
-			<ul role='list'>
+			<ul role="list">
 				{
 					translations['things-i-created'].map((project: any) => (
 						<li>
 							<article>
-								<div class='content'>
+								<div class="content">
 									<h3>
 										{project.title}
-										<HeaderAnchor lang={lang} id={'i-created-' + project.slug} />
+										<HeaderAnchor
+											lang={lang}
+											id={'i-created-' + project.slug}
+										/>
 									</h3>
 									<Markdown content={project.description} />
-									<ul role='list'>
+									<ul role="list">
 										{project.links.map((link: any) => (
 											<li>
-												<a href={link.url}>{link.title}</a>
+												<a href={link.url}>
+													{link.title}
+												</a>
 											</li>
 										))}
 									</ul>
@@ -141,25 +151,30 @@ const share = {
 			</ul>
 		</section>
 		<section>
-			<h2 id='things-i-like'>
+			<h2 id="things-i-like">
 				{translations.headings['things-i-like']}
-				<HeaderAnchor {lang} id='things-i-like' />
+				<HeaderAnchor {lang} id="things-i-like" />
 			</h2>
-			<ul role='list'>
+			<ul role="list">
 				{
 					translations['things-i-like'].map((project: any) => (
 						<li>
 							<article>
-								<div class='content'>
+								<div class="content">
 									<h3>
 										{project.title}
-										<HeaderAnchor lang={lang} id={'i-like-' + project.slug} />
+										<HeaderAnchor
+											lang={lang}
+											id={'i-like-' + project.slug}
+										/>
 									</h3>
 									<Markdown content={project.description} />
-									<ul role='list'>
+									<ul role="list">
 										{project.links.map((link: any) => (
 											<li>
-												<a href={link.url}>{link.title}</a>
+												<a href={link.url}>
+													{link.title}
+												</a>
 											</li>
 										))}
 									</ul>
@@ -182,7 +197,7 @@ const share = {
 	</section>
 </Layout>
 
-<style lang='scss'>
+<style lang="scss" is:global>
 	#about-me {
 		display: flex;
 		flex-direction: column;
@@ -280,11 +295,24 @@ const share = {
 				padding: 1em 0.5em;
 				justify-content: flex-start;
 				border-radius: 0.5rem;
-				background-image: linear-gradient(to right, var(--body-bg), var(--body-bg)),
+				background-image: linear-gradient(
+						to right,
+						var(--body-bg),
+						var(--body-bg)
+					),
 					linear-gradient(to right, var(--body-bg), var(--body-bg)),
-					linear-gradient(to right, hsl(0 0% 0% / 0.5), hsl(0 0% 0% / 0)),
-					linear-gradient(to left, hsl(0 0% 0% / 0.5), hsl(0 0% 0% / 0));
-				background-position: left center, right center, left center, right center;
+					linear-gradient(
+						to right,
+						hsl(0 0% 0% / 0.5),
+						hsl(0 0% 0% / 0)
+					),
+					linear-gradient(
+						to left,
+						hsl(0 0% 0% / 0.5),
+						hsl(0 0% 0% / 0)
+					);
+				background-position: left center, right center, left center,
+					right center;
 				background-repeat: no-repeat;
 				background-attachment: local, local, scroll, scroll;
 				background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;

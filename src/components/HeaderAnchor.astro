@@ -9,7 +9,7 @@ export interface Props {
 
 const { id, label, lang = "en" } = Astro.props as Props
 
-const title = label || getTranslations('components', lang).HeaderAnchor.label
+const title = label || (await getTranslations('components', lang)).HeaderAnchor.label
 
 ---
 

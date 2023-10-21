@@ -1,8 +1,8 @@
 ---
-import Markdown from '@astrojs/markdown-component'
+import Markdown from '$/components/Markdown.astro'
 import Layout from '$/layouts/PageLayout.astro'
 import { createI18n } from '$/scripts/i18n'
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 
 export const getStaticPaths = createI18n('about/index')
 const { translations, langs } = Astro.props

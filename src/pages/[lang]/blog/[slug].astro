@@ -1,9 +1,8 @@
 ---
 import Blog from '$/layouts/Blog.astro'
-import { Page } from '&/page';
-import { CollectionEntry, getCollection } from 'astro:content';
+import { type Page } from '&/page';
+import { type CollectionEntry, getCollection } from 'astro:content';
 
-import { readFileSync } from 'fs'
 import json5 from 'json5'
 
 export interface Props {
@@ -27,7 +26,7 @@ export const getStaticPaths = async () => {
 		}
 	}
 
-	return sortedPosts.map(post => {
+	return sortedPosts.map(async post => {
 		const {slug, lang: postLang} = getSlugInfo(post)
 
 		return {
@@ -36,7 +35,7 @@ export const getStaticPaths = async () => {
 				slug: slug
 			},
 			props: {
-				translations: json5.parse(readFileSync(`./src/i18n/blog/${postLang}.json5`).toString()),
+				translations: json5.parse(await Bun.file(`./src/i18n/blog/${postLang}.json5`).text()),
 				post
 			}
 		}

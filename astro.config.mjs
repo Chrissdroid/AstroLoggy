@@ -3,6 +3,7 @@ import sitemap from '@astrojs/sitemap'
 import { h } from 'hastscript'
 import prefetch from '@astrojs/prefetch'
 import compress from 'astro-compress'
+import icon from 'astro-icon'
 
 import mdx from '@astrojs/mdx'
 
@@ -15,13 +16,38 @@ export default defineConfig({
 	site: 'https://astrologgy.info/',
 	server: {
 		port: 3000,
-		trailingSlash: 'always',
+		trailingSlash: 'always'
 	},
 	experimental: {
-		assets: true,
+		optimizeHoistedScript: true
 	},
+	image: {
+		remotePatterns: [{ hostname: '*.astrologgy.info' }]
+	},
+	root: '.',
 	integrations: [
-		prefetch(),
+		prefetch({
+			throttle: 3
+		}),
+		icon({
+			include: {
+				ic: [
+					'twitter-fill',
+					'discord-fill',
+					'github-fill',
+					'round-share',
+					'round-construction'
+				],
+				ri: ['twitter-fill', 'discord-fill', 'github-fill'],
+				mdi: ['security-lock'],
+				'radix-icons': ['*'],
+				'emojione-v1': [
+					'flag-for-united-kingdom',
+					'flag-for-france',
+					'flag-for-germany'
+				]
+			}
+		}),
 		sitemap({
 			changefreq: 'weekly',
 			priority: 0.7,
@@ -30,8 +56,8 @@ export default defineConfig({
 				defaultLocale: 'en',
 				locales: {
 					en: 'en-US',
-					fr: 'fr-CA',
-				},
+					fr: 'fr-CA'
+				}
 			},
 			serialize(item) {
 				switch (true) {
@@ -48,19 +74,19 @@ export default defineConfig({
 						break
 				}
 				return item
-			},
+			}
 		}),
 		mdx({
 			extendMarkdownConfig: true,
-			optimize: true,
+			optimize: true
 		}),
-		compress(),
+		compress()
 	],
 	markdown: {
 		syntaxHighlight: 'shiki',
 		shikiConfig: {
-			theme: 'material-palenight',
-			wrap: false,
+			theme: 'material-theme-palenight',
+			wrap: false
 		},
 		rehypePlugins: [
 			rehypeSlug,
@@ -71,17 +97,12 @@ export default defineConfig({
 					properties: {
 						class: 'header-anchor',
 						'data-nosnippet': true,
-						title: 'Copy link to this element',
+						title: 'Copy link to this element'
 					},
-					content: () => [h(null, '#')],
-				},
-			],
+					content: () => [h(null, '#')]
+				}
+			]
 		],
-		remarkPlugins: [remarkTextr],
-	},
-	vite: {
-		ssr: {
-			external: ['svgo'],
-		},
-	},
+		remarkPlugins: [remarkTextr]
+	}
 })

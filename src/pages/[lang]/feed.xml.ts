@@ -1,5 +1,4 @@
 import { createI18n } from '$/scripts/i18n'
-import { readFileSync } from 'fs'
 import rss, { type RSSFeedItem } from '@astrojs/rss'
 import type { APIRoute } from 'astro'
 import { getCollection } from 'astro:content'
@@ -10,7 +9,7 @@ export const getStaticPaths = createI18n('defaults/page')
 export const get: APIRoute = async function get(context) {
 	const blog = await getCollection('blog')
 	const { lang } = context.params
-	const file = readFileSync(`./src/i18n/defaults/page/${lang}.json5`).toString()
+	const file = await Bun.file(`./src/i18n/defaults/page/${lang}.json5`).text()
 	const translations = Object.create(json5.parse(file))
 
 	const computeSlug = (slug: string) => {
@@ -18,7 +17,7 @@ export const get: APIRoute = async function get(context) {
 
 		return {
 			lang,
-			id: ids.join('/'),
+			id: ids.join('/')
 		}
 	}
 
@@ -31,12 +30,12 @@ export const get: APIRoute = async function get(context) {
 		site: context.site?.href || '',
 		customData: `<language>${correctLangCode}</language>`,
 		items: blog
-			.filter(post => {
+			.filter((post) => {
 				const { lang: postLang } = computeSlug(post.slug)
 
 				return postLang === lang
 			})
-			.map(post => {
+			.map((post) => {
 				const { id } = computeSlug(post.slug)
 
 				const item: RSSFeedItem = {
@@ -44,10 +43,10 @@ export const get: APIRoute = async function get(context) {
 					pubDate: post.data.published_at,
 					author: post.data.author.name,
 					description: post.data.description,
-					link: `/${lang}/blog/${id}/`,
+					link: `/${lang}/blog/${id}/`
 				}
 
 				return item
-			}),
+			})
 	})
 }

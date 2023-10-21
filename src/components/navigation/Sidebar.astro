@@ -1,5 +1,4 @@
 ---
-import { readFileSync } from 'fs'
 import json5 from 'json5'
 
 export interface Props {
@@ -12,7 +11,7 @@ export interface Props {
 }
 
 const { headers, lang } = Astro.props as Props;
-const translation = json5.parse(readFileSync(`./src/i18n/navigation/${lang}.json5`).toString())
+const translation = json5.parse(await Bun.file(`./src/i18n/navigation/${lang}.json5`).text())
 
 ---
 

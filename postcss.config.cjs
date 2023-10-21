@@ -1,9 +1,13 @@
 module.exports = {
-  plugins: [
-    require('postcss-preset-env'),
-    require('cssnano')({
-      preset: 'default',
-      plugins: [require('autoprefixer')]
-    })
-  ],
-};
+	plugins: [
+		require('cssnano')({
+			preset: 'advanced',
+			plugins: [
+				'autoprefixer',
+				['postcss-preset-env', {
+					browsers: 'last 2 versions'
+				}]
+			]
+		})
+	]
+}

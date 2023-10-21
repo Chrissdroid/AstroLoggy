@@ -1,10 +1,9 @@
 ---
 import Head from '$/components/Head.astro'
-import { readFileSync } from 'fs'
 import json5 from 'json5'
 
 const url = new URL(Astro.request.url)
-const translations = json5.parse(readFileSync(`./src/i18n/l/index/en.json5`).toString())
+const translations = json5.parse(await Bun.file(`./src/i18n/l/index/en.json5`).text())
 ---
 
 <!DOCTYPE html>

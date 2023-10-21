@@ -1,7 +1,6 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 
-import { readFileSync } from 'fs'
 import json5 from 'json5'
 
 import headerIcon from '@/header-icon.svg'
@@ -24,8 +23,8 @@ const getNewUrl = (breadcrumb: string[], index: number, lang: string) => {
 }
 
 const { lang, langs = null, url, share = null } = Astro.props
-const translation = json5.parse(readFileSync(`./src/i18n/navigation/${lang}.json5`).toString())
-const languages = json5.parse(readFileSync('./src/i18n/languages.json5').toString())
+const translation = json5.parse(await Bun.file(`./src/i18n/navigation/${lang}.json5`).text())
+const languages = json5.parse(await Bun.file('./src/i18n/languages.json5').text())
 
 const breadcrumb = url.pathname.split('/').filter(Boolean).slice(1)
 
@@ -291,7 +290,7 @@ if (share) {
 						<a lang={lg} class={(lg == lang ? 'active' : null) + ' button'} href={changeLanguage(url, lg)}>
 							{languages[lg].name || ''}
 							<i class='flag-icon' aria-hidden='true'>
-								<Icon pack='emojione-v1' name={languages[lg].flag} />
+								<Icon name={'emojione-v1:' + languages[lg].flag} />
 							</i>
 						</a>
 					</li>
