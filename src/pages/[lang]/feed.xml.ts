@@ -6,7 +6,7 @@ import json5 from 'json5'
 
 export const getStaticPaths = createI18n('defaults/page')
 
-export const get: APIRoute = async function get(context) {
+export const get: APIRoute = async function GET(context) {
 	const blog = await getCollection('blog')
 	const { lang } = context.params
 	const file = await Bun.file(`./src/i18n/defaults/page/${lang}.json5`).text()
