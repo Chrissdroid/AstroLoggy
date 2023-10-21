@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config'
+import { defineConfig, squooshImageService } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import { h } from 'hastscript'
 import prefetch from '@astrojs/prefetch'
@@ -22,6 +22,7 @@ export default defineConfig({
 		optimizeHoistedScript: true
 	},
 	image: {
+		service: squooshImageService(),
 		remotePatterns: [{ hostname: '*.astrologgy.info' }]
 	},
 	root: '.',
