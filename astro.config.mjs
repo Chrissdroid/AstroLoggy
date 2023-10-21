@@ -33,9 +33,6 @@ export default defineConfig({
 		icon({
 			include: {
 				ic: [
-					'twitter-fill',
-					'discord-fill',
-					'github-fill',
 					'round-share',
 					'round-construction'
 				],
