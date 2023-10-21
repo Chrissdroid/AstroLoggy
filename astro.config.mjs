@@ -22,7 +22,6 @@ export default defineConfig({
 		optimizeHoistedScript: true
 	},
 	image: {
-		service: squooshImageService(),
 		remotePatterns: [{ hostname: '*.astrologgy.info' }]
 	},
 	root: '.',
@@ -32,10 +31,7 @@ export default defineConfig({
 		}),
 		icon({
 			include: {
-				ic: [
-					'round-share',
-					'round-construction'
-				],
+				ic: ['round-share', 'round-construction'],
 				ri: ['twitter-fill', 'discord-fill', 'github-fill'],
 				mdi: ['security-lock'],
 				'radix-icons': ['*'],
